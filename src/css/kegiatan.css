@@ -1,0 +1,206 @@
+* {
+  margin: 0;
+}
+
+.kegiatan-root {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-image: linear-gradient(#38ef7d,#11998e);
+}
+
+  .kegiatan-list {
+    position: absolute;
+    width: 100%;
+    max-height: 100%;
+    overflow-y: scroll;  
+  } 
+
+    .kegiatan-search {
+      width: calc(100% - 40px);
+      height: 20px;
+      background: rgba(255,255,255,0.7);
+      margin-left: 10px;
+      padding: 10px;
+      outline: none;
+      color: #333;
+      border: 0;
+      border-radius: 5px;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      font-size: 16px;
+      transition: 0.3s;
+      box-shadow: 0 8px 6px -6px rgba(0,0,0,0.7);
+    }
+
+    .kegiatan-search:focus {
+      background: #fff;
+      box-shadow: 0 15px 8px -6px rgba(0,0,0,0.5);
+    }
+
+    .kegiatan-search-list {
+      width: calc(100% - 20px);
+      height: auto;
+      margin-left: 10px;
+      display: none;
+    }
+
+      .kegiatan-search-item {
+        width: calc(100% - 20px);
+        height: auto;
+        padding: 10px;
+        border-radius: 5px;
+        background: #ddd;
+        margin-bottom: 10px;
+        color: #333;
+      }
+
+      .kegiatan-search-item:last-child {
+        margin-bottom: 50px;
+      }
+
+    .kegiatan-item {
+      width: calc(100% - 40px);
+      height: auto;
+      background: #FFEB3B;
+      margin-left: 10px;
+      border-radius: 5px;
+      padding: 10px;
+      display: grid;
+      grid-template-columns: 40px 1fr 20px;
+      user-select: none;
+      margin-bottom: 10px;
+      box-shadow: 0 8px 6px -6px rgba(0,0,0,0.7);
+    }
+    
+      .kegiatan-item-etc {
+        justify-self: center;
+        align-self: center;
+      }
+
+      .kegiatan-item-etc:first-child {
+        font-weight: bold;
+        justify-self: start;
+        font-size: 20px;
+      }
+
+      .kegiatan-child {
+        grid-column: 1/4;
+        height: auto;
+        background: #333;
+        margin-top: 10px;
+        border-radius: 5px;
+        padding: 10px;
+        display: none;
+      }
+
+        .kegiatan-child-item {
+          width: 100%;
+          height: auto;
+          display: grid;
+          grid-template-columns: 40px 1fr 20px;
+          user-select: none;
+          padding-bottom: 10px;
+          margin-bottom: 10px;
+          border-bottom: 1px solid #FFEB3B;
+          color: #fff;
+        }
+
+        .kegiatan-child-item:last-child {
+          border-bottom: none;
+          margin-bottom: 0;
+          padding-bottom: 0;
+        }
+
+          .kegiatan-child-item-etc {
+            justify-self: center;
+            align-self: center;
+          }
+
+          .kegiatan-child-item-etc:first-child {
+            font-weight: bold;
+            justify-self: start;
+            font-size: 20px;
+          }
+
+          .kegiatan-grandchild {
+            grid-column: 1/4;
+            height: auto;
+            background: #fff;
+            margin-top: 10px;
+            border-radius: 5px;
+            padding: 10px;
+            display: none;
+          }
+
+            .kegiatan-grandchild-item {
+              width: 100%;
+              height: auto;
+              display: grid;
+              grid-template-columns: 40px 1fr 20px;
+              user-select: none;
+              padding-bottom: 10px;
+              margin-bottom: 10px;
+              border-bottom: 1px solid #333;
+              color: #333;
+            }
+
+            .kegiatan-grandchild-item:last-child {
+              border-bottom: none;
+              margin-bottom: 0;
+              padding-bottom: 0;
+            }
+    
+              .kegiatan-grandchild-item-etc {
+                justify-self: center;
+                align-self: center;
+              }
+    
+              .kegiatan-grandchild-item-etc:first-child {
+                font-weight: bold;
+                justify-self: start;
+                font-size: 20px;
+              }
+
+              .kegiatan-grandchild-process {
+                grid-column: 1/4;
+              }
+
+                .kegiatan-grandchild-fisik,
+                .kegiatan-grandchild-keuangan {
+                  position: relative;
+                  width: 100%;
+                  height: 20px;
+                  background: #ddd;
+                  border-radius: 5px;
+                }
+
+                .kegiatan-grandchild-fisik {
+                  margin: 5px 0 5px 0;
+                }
+
+                  .kegiatan-grandchild-bar {
+                    position: absolute;
+                    border-radius: 5px;
+                    background: #FFEB3B;
+                    top: 0;
+                    left: 0;
+                    height: 20px;
+                    width: 20%;
+                  }
+
+                  .kegiatan-grandchild-percen {
+                    position: absolute;
+                    width: 100%;
+                    height: 100%;
+                    top: 0;
+                    left: 0;
+                    z-index: 2;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    font-size: 15px;
+                    color: #333;
+                  }
