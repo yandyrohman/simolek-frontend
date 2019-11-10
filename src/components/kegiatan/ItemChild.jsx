@@ -29,7 +29,10 @@ export default class ItemChild extends React.Component {
           </div>
           <div className="kegiatan-child-item-etc"><KeyboardArrowDown /></div>
           <div className="kegiatan-grandchild" id={`child-${parentIndex}-${index}-list`}>
-            <ItemGrandChild data={grandchild}/>
+            <ItemGrandChild 
+              data={grandchild}
+              openDetailPopup={this.props.openDetailPopup}
+            />
           </div>
         </div>
       )

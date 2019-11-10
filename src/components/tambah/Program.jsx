@@ -61,9 +61,11 @@ export default class Program extends React.Component {
             >
               <Kegiatans 
                 data={x.child}
-                index={i+1}
+                indexProgram={x.id}
                 namaProgram={x.nama_program}
                 openPopup={this.props.openPopup}
+                getAllDatas={this.props.getAllDatas}
+                turnLoading={this.props.turnLoading}
               />
             </div>
           </React.Fragment>
@@ -83,7 +85,9 @@ export default class Program extends React.Component {
           className="tambah-program-add"
           onClick={() => this.props.openPopup('program', {
             title: 'Program',
-            etc: ''
+            etc: '',
+            id_program: null,
+            id_kegiatan: null
           })}
         >
           <Add />
@@ -98,6 +102,8 @@ export default class Program extends React.Component {
           caption={this.state.delete_caption}
           type={this.state.delete_type}
           hideDeleteParentState={this.hideDelete}
+          getAllDatas={this.props.getAllDatas}
+          turnLoading={this.props.turnLoading}
         />
       </React.Fragment>
     )

@@ -33,7 +33,11 @@ export default class Item extends React.Component {
           </div>
           <div className="kegiatan-item-etc"><KeyboardArrowDown id={`item-${index}`}/></div>
           <div className="kegiatan-child" id={`item-${index}-list`}>
-            <ItemChild data={child} index={index}/>
+            <ItemChild 
+              data={child} 
+              index={index}
+              openDetailPopup={this.props.openDetailPopup}
+            />
           </div>
        </div> 
       )

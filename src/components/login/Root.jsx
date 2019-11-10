@@ -38,7 +38,8 @@ export default class Root extends React.Component {
       },
       body: JSON.stringify(body)
     }).then(res => res.json()).then(res => {
-      if (res.login === true) {
+      if (res.login !== false) {
+        window.localStorage.setItem('user', JSON.stringify(res));
         window.location = '/#/menu';
       } else {
         this.loginError()

@@ -425,17 +425,16 @@
     }
 
       .tambah-detailnext-group label {
-        font-size: 18px;
-        font-weight: bold;
+        font-size: 15px;
       }
 
       .tambah-detailnext-input {
-        width: calc(100% - 20px);
+        width: calc(100% - 22px);
         height: 30px;
-        background: #ddd;
+        background: #eee;
         padding: 10px;
         outline: none;
-        border: 0;
+        border: 1px solid #ccc;
         border-radius: 5px;
         margin-top: 5px;
         font-size: 16px;
@@ -444,7 +443,7 @@
       }
 
       .tambah-detailnext-input:focus {
-        box-shadow: inset 0 0 0 2px #333;
+        border: 1px solid #333;
       }
 
     .tambah-detailnext-action {
@@ -452,7 +451,8 @@
       height: auto;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      margin-top: 20px;
+      margin-top: 30px;
+      margin-bottom: 10px;
     }
 
       .tambah-detailnext-no,
@@ -462,6 +462,7 @@
         font-weight: bold;
         font-size: 18px;
         user-select: none;
+        color: #11998e;
       }
 
 

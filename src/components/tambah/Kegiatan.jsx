@@ -26,8 +26,8 @@ export default class Kegiatan extends React.Component {
       delete_show: false
     })
   }
-  showChild = (index) => {
-    let thisChildContainer = document.getElementById(`kegiatan-child-${index}`);
+  showChild = (indexProgram) => {
+    let thisChildContainer = document.getElementById(`kegiatan-child-${indexProgram}`);
     let { display } = thisChildContainer.style;
     if (display === 'none' || display === '') {
       thisChildContainer.style.display = 'block';
@@ -36,7 +36,7 @@ export default class Kegiatan extends React.Component {
     }
   }
   render() {
-    let { data, index, namaProgram } = this.props;
+    let { data, indexProgram, namaProgram } = this.props;
     let kegiatans;
     if (data.length !== 0) {
       kegiatans = data.map((x, i) => {
@@ -44,7 +44,7 @@ export default class Kegiatan extends React.Component {
           <React.Fragment key={i}>
             <div 
               className="tambah-kegiatan"
-              onClick={() => this.showChild(`${index}-${i}`)}
+              onClick={() => this.showChild(`${indexProgram}-${i}`)}
             >
               <b>{i+1}.</b>&nbsp;
               <span>{x.nama_kegiatan}</span>
@@ -57,13 +57,17 @@ export default class Kegiatan extends React.Component {
             </div>
             <div 
               className="tambah-kegiatan-child"
-              id={`kegiatan-child-${index}-${i}`}
+              id={`kegiatan-child-${indexProgram}-${i}`}
             >
               <Details 
                 data={x.grandchild}
-                index={i+1}
+                indexProgram={indexProgram}
+                indexKegiatan={x.id}
+                nomorKegiatan={i+1}
                 namaKegiatan={x.nama_kegiatan}
                 openPopup={this.props.openPopup}
+                getAllDatas={this.props.getAllDatas}
+                turnLoading={this.props.turnLoading}
               />
             </div>
           </React.Fragment>
@@ -72,7 +76,7 @@ export default class Kegiatan extends React.Component {
     } else {
       kegiatans = (
         <div className="tambah-kegiatan-none">
-          Program {index} tidak ada kegiatan..
+          Program {indexProgram} tidak ada kegiatan..
         </div>
       );
     }
@@ -83,13 +87,15 @@ export default class Kegiatan extends React.Component {
           className="tambah-kegiatan-add"
           onClick={() => this.props.openPopup('kegiatan', {
             title: 'Kegiatan',
-            etc: namaProgram
+            etc: namaProgram,
+            id_program: indexProgram,
+            id_kegiatan: null
           })}
         >
           <Add />
           <div className="tambah-kegiatan-add-caption">
             <span className="tambah-kegiatan-add-arrow"></span>
-            <span>Tambah Kegiatan <b>(Program {index})</b></span>
+            <span>Tambah Kegiatan <b>(Program {indexProgram})</b></span>
           </div>
         </div>
         <Delete 
@@ -98,6 +104,8 @@ export default class Kegiatan extends React.Component {
           caption={this.state.delete_caption}
           type={this.state.delete_type}
           hideDeleteParentState={this.hideDelete}
+          getAllDatas={this.props.getAllDatas}
+          turnLoading={this.props.turnLoading}
         />
       </React.Fragment>
     )

@@ -5,6 +5,7 @@ import Tambah from '../src/pages/Tambah'
 import Input from '../src/pages/Input'
 import Profile from '../src/pages/Profile'
 import Login from '../src/pages/Login'
+import Users from '../src/pages/Users'
 import { Route } from 'react-router-dom'
 
 export default class App extends React.Component {
@@ -17,6 +18,7 @@ export default class App extends React.Component {
         <Route exact path="/tambah" component={Tambah} />
         <Route exact path="/input" component={Input} />
         <Route exact path="/profile" component={Profile} />
+        <Route exact path="/users" component={Users} />
       </React.Fragment>
     )
   }

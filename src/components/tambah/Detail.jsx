@@ -26,7 +26,7 @@ export default class Detail extends React.Component {
     })
   }
   render() {
-    let { data, index, namaKegiatan } = this.props;
+    let { data, indexProgram, indexKegiatan ,nomorKegiatan ,namaKegiatan } = this.props;
     let details;
     if (data.length !== 0) {
       details = data.map((x, i) => {
@@ -48,7 +48,7 @@ export default class Detail extends React.Component {
     } else {
       details = (
         <div className="tambah-detail-none">
-          Kegiatan {index} tidak ada sub kegiatan..
+          Kegiatan {nomorKegiatan} tidak ada sub kegiatan..
         </div>
       );
     }
@@ -59,13 +59,15 @@ export default class Detail extends React.Component {
           className="tambah-detail-add"
           onClick={() => this.props.openPopup('detail', {
             title: 'Sub Kegiatan',
-            etc: namaKegiatan
+            etc: namaKegiatan,
+            id_program: indexProgram,
+            id_kegiatan: indexKegiatan
           })}
         >
           <Add />
           <div className="tambah-detail-add-caption">
             <span className="tambah-detail-add-arrow"></span>
-            <span>Tambah Sub Kegiatan <b>(Kegiatan {index})</b></span>
+            <span>Tambah Sub Kegiatan <b>(Kegiatan {nomorKegiatan})</b></span>
           </div>
         </div>
         <Delete 
@@ -74,6 +76,8 @@ export default class Detail extends React.Component {
           caption={this.state.delete_caption}
           type={this.state.delete_type}
           hideDeleteParentState={this.hideDelete}
+          getAllDatas={this.props.getAllDatas}
+          turnLoading={this.props.turnLoading}
         />
       </React.Fragment>
     )

@@ -20,6 +20,7 @@ export default class DetailNext extends React.Component {
   }
   render() {
     let { show } = this.state;
+    let { users, data } = this.props;
     let display = show === true ? 'flex' : 'none';
     return (
       <div className="tambah-detailnext-popup" style={{display: display}}>
@@ -28,34 +29,57 @@ export default class DetailNext extends React.Component {
           <div className="tambah-detailnext-group">
             <label>Nama Sub Kegiatan</label>
             <input 
+              name="input"
               className="tambah-detailnext-input"
               type="text"
               placeholder="Nama Sub Kegiatan"
               spellCheck="false"
+              value={data.input}
+              onChange={this.props.changeNextData}
             />
           </div>
           <div className="tambah-detailnext-group">
-            <label>Label</label>
-            <select className="tambah-detailnext-input">
-              <option>Item 1</option>
-              <option>Item 2</option>
-              <option>Item 3</option>
-              <option>Item 4</option>
-              <option>Item 5</option>
+            <label>PPTK</label>
+            <select 
+              name="pptk"
+              className="tambah-detailnext-input"
+              value={data.pptk}
+              onChange={this.props.changeNextData}
+            >
+              <option hidden>Pilih PPTK</option>
+              {
+                users.map(user => 
+                  user.role === 'pptk' ? (
+                    <option key={user.id} value={user.id}>{user.real_name}</option>
+                  ) : ''
+                )
+              }
             </select>
           </div>
           <div className="tambah-detailnext-group">
-            <label>Label</label>
-            <input 
+            <label>PPK</label>
+            <select 
+              name="ppk"
               className="tambah-detailnext-input"
-              type="text"
-              placeholder="placeholder"
-              spellCheck="false"
-            />
+              value={data.ppk}
+              onChange={this.props.changeNextData}
+            >
+              <option hidden>Pilih PPK</option>
+              {
+                users.map(user => 
+                  user.role === 'ppk' ? (
+                    <option key={user.id} value={user.id}>{user.real_name}</option>
+                  ) : ''
+                )
+              }
+            </select>
           </div>
           <div className="tambah-detailnext-action">
             <div className="tambah-detailnext-no" onClick={this.hidePopup}>BATAL</div>
-            <div className="tambah-detailnext-yes">SIMPAN</div>
+            <div 
+              className="tambah-detailnext-yes"
+              onClick={() => this.props.sendDetail()}
+            >SIMPAN</div>
           </div>
         </div>
       </div>

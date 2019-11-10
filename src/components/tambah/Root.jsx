@@ -1,31 +1,52 @@
-import React from 'react';
-import '../../css/tambah.css';
-import Url from '../../API';
-import Programs from './Program';
-import Loading from '../other/Loading';
-import Tambah from './Tambah';
-import Back from '../other/Back';
+import React from 'react'
+import '../../css/tambah.css'
+import Url from '../../API'
+import Programs from './Program'
+import Loading from '../other/Loading'
+import Tambah from './Tambah'
+import Back from '../other/Back'
 
 export default class Root extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       data: [],
+      users: [],
       loading: false,
       popup_show: false,
       popup_type: '',
       popup_data: {
         title: '',
-        etc: ''
+        etc: '',
+        id_program: null,
+        id_kegiatan: null
       }
     }
   }
   componentDidMount() {
-    this.getDataKegiatan(data => {
+    this.getAllDatas()
+  }
+  getAllDatas = () => {
+    this.turnLoading('on')
+    this.getDataKegiatan((data, users) => {
       this.setState({
         data: data,
-        loading: false
+        users: users,
+      }, this.turnLoading('off'))
+    })
+  }
+  getDataKegiatan = (callback) => {
+    let url = Url.api + 'get_kegiatan';
+    fetch(url).then(res => res.json()).then(data => {
+      this.getDataUsers(users => {
+        callback(data, users)
       })
+    })
+  }
+  getDataUsers = (callback) => {
+    let url = Url.api + 'get_users';
+    fetch(url).then(res => res.json()).then(data => {
+      callback(data)
     })
   }
   openPopup = (type, data) => {
@@ -35,13 +56,14 @@ export default class Root extends React.Component {
       popup_data: data
     })
   }
-  getDataKegiatan(callback) {
-    let url = Url.api + 'get_kegiatan';
+  hidePopup = () => {
     this.setState({
-      loading: true
+      popup_show: false
     })
-    fetch(url).then(res => res.json()).then(data => {
-      callback(data)
+  }
+  turnLoading = (value) => {
+    this.setState({
+      loading: value === 'on' ? true : false
     })
   }
   render() {
@@ -50,7 +72,8 @@ export default class Root extends React.Component {
       loading, 
       popup_show, 
       popup_type,
-      popup_data
+      popup_data,
+      users
     } = this.state;
     return (
       <div className="tambah-root">
@@ -58,6 +81,10 @@ export default class Root extends React.Component {
           show={popup_show} 
           type={popup_type}
           data={popup_data}
+          users={users}
+          getAllDatas={this.getAllDatas}
+          hidePopup={this.hidePopup}
+          turnLoading={this.turnLoading}
         />
         <Loading loading={loading}/>
         <div className="tambah-list">
@@ -68,6 +95,8 @@ export default class Root extends React.Component {
           <Programs 
             data={data}
             openPopup={this.openPopup}
+            getAllDatas={this.getAllDatas}
+            turnLoading={this.turnLoading}
           />
         </div>
       </div>

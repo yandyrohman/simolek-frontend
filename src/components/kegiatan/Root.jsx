@@ -1,10 +1,11 @@
 import React from 'react'
 import '../../css/kegiatan.css'
 import Item from './Item'
-import Search from './Search';
-import Loading from '../other/Loading';
-import Url from '../../API';
-import Back from '../other/Back';
+import Search from './Search'
+import Loading from '../other/Loading'
+import Url from '../../API'
+import Back from '../other/Back'
+import Detail from './Detail'
 
 export default class Root extends React.Component {
   constructor(props) {
@@ -14,7 +15,9 @@ export default class Root extends React.Component {
       items_backup: [],
       search_filter: '',
       nama_detail: [],
-      loading: false
+      loading: false,
+      detail_popup_show: false,
+      detail_popup_data: []
     }
   }
   componentDidMount() {
@@ -93,6 +96,17 @@ export default class Root extends React.Component {
       items: backup
     })
   }
+  openDetailPopup = (data) => {
+    this.setState({
+      detail_popup_show: true,
+      detail_popup_data: data
+    })
+  }
+  closeDetailPopup = () => {
+    this.setState({
+      detail_popup_show: false,
+    })
+  }
   render() {
     return (
       <div className="kegiatan-root">
@@ -113,8 +127,16 @@ export default class Root extends React.Component {
             filter={this.state.search_filter}
             openSelectedKegiatan={this.openSelectedKegiatan}
           />
-          <Item data={this.state.items}/>
+          <Item 
+            data={this.state.items}
+            openDetailPopup={this.openDetailPopup}
+          />
         </div>
+        <Detail 
+          show={this.state.detail_popup_show}
+          data={this.state.detail_popup_data}
+          closeDetailPopup={this.closeDetailPopup}
+        />
       </div>
     )
   }

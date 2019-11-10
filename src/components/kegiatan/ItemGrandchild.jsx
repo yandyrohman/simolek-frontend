@@ -14,7 +14,11 @@ export default class ItemGrandChild extends React.Component {
       let pc_fisik = {width: `${persentase_fisik}%`};
       let pc_keuangan = {width: `${persentase_keuangan}%`};
       return (
-        <div className="kegiatan-grandchild-item" key={index}>
+        <div 
+          className="kegiatan-grandchild-item" 
+          key={index}
+          onClick={() => this.props.openDetailPopup(grandChild)}
+        >
           <div className="kegiatan-grandchild-item-etc">{index + 1}</div>
           <div className="kegiatan-grandchild-item-etc">{nama_detail}</div>
           <div className="kegiatan-grandchild-item-etc"><KeyboardArrowRight /></div>
