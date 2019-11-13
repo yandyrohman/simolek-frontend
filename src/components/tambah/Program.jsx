@@ -62,6 +62,7 @@ export default class Program extends React.Component {
               <Kegiatans 
                 data={x.child}
                 indexProgram={x.id}
+                nomorProgram={i+1}
                 namaProgram={x.nama_program}
                 openPopup={this.props.openPopup}
                 getAllDatas={this.props.getAllDatas}

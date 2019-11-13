@@ -48,7 +48,8 @@ export default class Delete extends React.Component {
     }).then(res => res.text()).then((res) => {
       this.hideDelete()
       this.props.getAllDatas()
-      // console.log(res)
+      document.getElementById('popup-next').style.display = 'none';
+      document.getElementById('popup-tambah').style.display = 'none';
     })
   }
   render() {

@@ -36,7 +36,9 @@ export default class Root extends React.Component {
     })
   }
   getDataKegiatan = (callback) => {
-    let url = Url.api + 'get_kegiatan';
+    let user = JSON.parse(window.localStorage.getItem('user'));
+    // eslint-disable-next-line
+    let url = Url.api + 'get_kegiatan' + '/' + user.login.role + '/' + user.login.id;
     fetch(url).then(res => res.json()).then(data => {
       this.getDataUsers(users => {
         callback(data, users)

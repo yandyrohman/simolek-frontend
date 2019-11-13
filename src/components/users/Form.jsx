@@ -9,12 +9,14 @@ export default class Form extends React.Component {
       <div className="users-form-popup" style={{display: display}}>
         <div className="users-form-scroll">
           <div className="users-form-box">
+            { type === 'edit' ? (
             <div 
               className="users-form-delete"
               onClick={() => this.props.showDelete(data.id)}
             >
               <Delete />
             </div>
+            ) : '' }
             <div className="users-form-title">
               {`${type === 'add' ? 'Tambah' : 'Ubah'} Pengguna`}
             </div>

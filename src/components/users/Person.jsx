@@ -1,5 +1,5 @@
 import React from 'react'
-import { KeyboardArrowRight } from '@material-ui/icons'
+import { KeyboardArrowRight, PersonOutline } from '@material-ui/icons'
 
 export default class Person extends React.Component {
   render() {
@@ -10,10 +10,11 @@ export default class Person extends React.Component {
         onClick={() => this.props.showForm('edit', data)}
       >
         <div className="users-item-photo">
-          <img 
+          {/* <img 
             src="/icon/profil.png"
             alt="profile"
-          />
+          /> */}
+          <PersonOutline />
         </div>
         <div className="users-item-name">{data.real_name}</div>
         <div className="users-item-position">{data.position}</div>

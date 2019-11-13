@@ -38,11 +38,7 @@ export default class Root extends React.Component {
           <small>Pantau kegiatan dinas dengan mudah!</small>
         </div>
         <div className="menu-profile">
-          <img 
-            className="menu-profile-photo" 
-            src="/icon/profil.png"
-            alt="profile"
-          />
+          <Person className="menu-profile-photo"/>
           <div className="menu-profile-name">{name}</div>
           <div className="menu-profile-jabatan">{position}</div>
         </div>
@@ -69,7 +65,7 @@ export default class Root extends React.Component {
             />
           ) : ''
         }
-        <div className="menu-footer">&copy; Dinas PUPR Garut v1.0</div>
+        <div className="menu-footer">Dinas PUPR Garut v1.0</div>
         <Feedback 
           show={this.state.show_feedback}
           display={this.displayFeedback}  
@@ -83,9 +79,9 @@ class MenuKPA extends React.Component {
   render() {
     return (
       <div className="menu-list">
-        <Link to="/grafik">
+        <Link to="/progres">
           <Assessment />
-          <span>Grafik<br/>Kegiatan</span>
+          <span>Progres<br/>Kegiatan</span>
         </Link>
         <Link to="/kegiatan">
           <Assignment />
@@ -116,9 +112,9 @@ class MenuPPTK extends React.Component {
   render() {
     return (
       <div className="menu-list">
-        <Link to="/grafik">
+        <Link to="/progres">
           <Assessment />
-          <span>Grafik<br/>Kegiatan</span>
+          <span>Progres<br/>Kegiatan</span>
         </Link>
         <Link to="/kegiatan">
           <Assignment />
@@ -157,9 +153,9 @@ class MenuPPK extends React.Component {
           <Assignment />
           <span>Semua<br/>Kegiatan</span>
         </Link>
-        <Link to="/grafik">
+        <Link to="/progres">
           <Assessment />
-          <span>Grafik<br/>Kegiatan</span>
+          <span>Progres<br/>Kegiatan</span>
         </Link>
         <Link to="/profile">
           <Person />

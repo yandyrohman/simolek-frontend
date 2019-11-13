@@ -40,6 +40,25 @@
         left: calc(50% - 35px);
       }
 
+      .profile-image-box {
+        position: absolute;
+        width: 70px;
+        height: 70px;
+        border-radius: 70px;
+        top: -35px;
+        left: calc(50% - 35px);
+        background: #eee;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+        .profile-image-box svg {
+          width: 40px;
+          height: 40px;
+          color: #555;
+        }
+
       .profile-name {
         width: 100%;
         height: auto;
@@ -53,7 +72,7 @@
         height: auto;
         text-align: center;
         font-size: 15px;
-        color: #aaa;
+        color: #888;
       }
 
       .profile-line {
@@ -74,7 +93,7 @@
         .profile-etc-label {
           width: 100%;
           font-size: 15px;
-          color: #aaa;
+          color: #888;
           display: flex;
           align-items: center;
           justify-content: center;

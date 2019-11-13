@@ -171,7 +171,7 @@ export default class Tambah extends React.Component {
     let display = show === true ? 'flex' : 'none';
     let etc = data.etc === '' ? '' : `di ${data.etc}`;
     return (
-      <div className="tambah-popup" style={{display: display}}>
+      <div className="tambah-popup" style={{display: display}} id="popup-tambah">
         <div className={`tambah-box ${color}`}>
           <div className="tambah-box-title">
             <h3>Tambah {data.title}</h3>

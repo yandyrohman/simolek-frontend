@@ -36,7 +36,7 @@ export default class Kegiatan extends React.Component {
     }
   }
   render() {
-    let { data, indexProgram, namaProgram } = this.props;
+    let { data, indexProgram, nomorProgram, namaProgram } = this.props;
     let kegiatans;
     if (data.length !== 0) {
       kegiatans = data.map((x, i) => {
@@ -76,7 +76,7 @@ export default class Kegiatan extends React.Component {
     } else {
       kegiatans = (
         <div className="tambah-kegiatan-none">
-          Program {indexProgram} tidak ada kegiatan..
+          Program {nomorProgram} tidak ada kegiatan..
         </div>
       );
     }
@@ -95,7 +95,7 @@ export default class Kegiatan extends React.Component {
           <Add />
           <div className="tambah-kegiatan-add-caption">
             <span className="tambah-kegiatan-add-arrow"></span>
-            <span>Tambah Kegiatan <b>(Program {indexProgram})</b></span>
+            <span>Tambah Kegiatan <b>(Program {nomorProgram})</b></span>
           </div>
         </div>
         <Delete 

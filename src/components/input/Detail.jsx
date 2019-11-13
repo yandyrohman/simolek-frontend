@@ -11,7 +11,7 @@ export default class Detail extends React.Component {
           <React.Fragment key={i}>
             <div 
               className="input-detail"
-              onClick={() => this.props.openInput(x.nama_detail)}
+              onClick={() => this.props.openInput(x)}
             >
               <b>{i+1}.</b>&nbsp;
               <span>{x.nama_detail}</span>

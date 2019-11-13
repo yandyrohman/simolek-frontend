@@ -23,7 +23,7 @@ export default class DetailNext extends React.Component {
     let { users, data } = this.props;
     let display = show === true ? 'flex' : 'none';
     return (
-      <div className="tambah-detailnext-popup" style={{display: display}}>
+      <div className="tambah-detailnext-popup" style={{display: display}} id="popup-next">
         <div className="tambah-detailnext-box">
           <h2>Lengkapi Sub Kegiatan</h2>
           <div className="tambah-detailnext-group">

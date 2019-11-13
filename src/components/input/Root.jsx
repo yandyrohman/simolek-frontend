@@ -13,34 +13,41 @@ export default class Root extends React.Component {
       data: [],
       loading: false,
       popup_show: false,
-      popup_caption: ''
+      popup_caption: '',
+      popup_data: []
     }
   }
   componentDidMount() {
-    this.getDataKegiatan(data => {
-      this.setState({
-        data: data,
-        loading: false,
-      })
-    })
+    this.getDataKegiatan()
   }
-  getDataKegiatan(callback) {
-    let url = Url.api + 'get_kegiatan';
+  getDataKegiatan = () => {
+    let user = JSON.parse(window.localStorage.getItem('user'));
+    let url = Url.api + 'get_kegiatan/' + user.login.role + '/' + user.login.id;
     this.setState({
       loading: true
     })
     fetch(url).then(res => res.json()).then(data => {
-      callback(data)
+      this.setState({
+        data: data,
+        loading: false,
+        popup_show: false
+      })
     })
   }
-  openInput = (caption) => {
+  openInput = (data) => {
     this.setState({
       popup_show: true,
-      popup_caption: caption
+      popup_caption: data.nama_detail,
+      popup_data: data
+    })
+  }
+  turnLoading = (value) => {
+    this.setState({
+      loading: value === 'on' ? true : false
     })
   }
   render() {
-    let { data, loading, popup_show, popup_caption } = this.state;
+    let { data, loading, popup_show, popup_caption, popup_data } = this.state;
     return (
       <div className="input-root">
         <div className="input-list">
@@ -57,6 +64,9 @@ export default class Root extends React.Component {
         <Input 
           show={popup_show}
           caption={popup_caption}
+          data={popup_data}
+          turnLoading={this.turnLoading}
+          getDataKegiatan={this.getDataKegiatan}
         />
       </div>
     );

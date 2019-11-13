@@ -45,7 +45,8 @@ export default class Root extends React.Component {
     })
   }
   getDataKegiatan(callback) {
-    let url = Url.api + 'get_kegiatan';
+    let user = JSON.parse(window.localStorage.getItem('user'))
+    let url = Url.api + 'get_kegiatan/' + user.login.role + '/' + user.login.id;
     this.setState({
       loading: true
     })

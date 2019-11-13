@@ -1,4 +1,5 @@
 import React from 'react'
+import Url from '../../API'
 
 export default class DetailNext extends React.Component {
   constructor(props) {
@@ -7,13 +8,15 @@ export default class DetailNext extends React.Component {
       show: false,
       caption: '',
       active_tab: 0,
-      active_inputs: 'data_kontrak'
+      active_inputs: 'data_kontrak',
+      data: []
     }
   }
-  UNSAFE_componentWillReceiveProps({show, caption}) {
+  UNSAFE_componentWillReceiveProps({show, caption, data}) {
     this.setState({
       show: show,
-      caption: caption
+      caption: caption,
+      data: data
     })
   }
   hidePopup = () => {
@@ -28,71 +31,102 @@ export default class DetailNext extends React.Component {
     })
   }
   render() {
-    let { show, caption, active_tab, active_inputs } = this.state;
+    let { show, caption, data } = this.state;
     let display = show === true ? 'flex' : 'none';
     return (
       <div className="input-value-popup" style={{display: display}}>
         <div className="input-value-box">
           <h3 className="input-value-title">{`Input Kegiatan ${caption}`}</h3>
-          <div className="input-value-tabs">
-            <div 
-              className={
-                active_tab === 0 ? 
-                'input-value-tab-item input-value-tab-item-active' : 
-                'input-value-tab-item'
-              }
-              onClick={() => this.changeTab('data_kontrak', 0)}
-            >Data&nbsp;Kontrak</div>
-            <div 
-              className={
-                active_tab === 1 ? 
-                'input-value-tab-item input-value-tab-item-active' : 
-                'input-value-tab-item'
-              }
-              onClick={() => this.changeTab('data_perusahaan', 1)}
-            >Data&nbsp;Perusahaan</div>
-            <div 
-              className={
-                active_tab === 2 ? 
-                'input-value-tab-item input-value-tab-item-active' : 
-                'input-value-tab-item'
-              }
-              onClick={() => this.changeTab('data_persentase', 2)}
-            >Persentase&nbsp;Progres</div>
-          </div>
-          { active_inputs === 'data_kontrak' ? (
-            <InputDataKontrak hideFunc={this.hidePopup}/>
-          ) : active_inputs === 'data_perusahaan' ? (
-            <InputDataPerusahaan hideFunc={this.hidePopup}/>
-          ) : active_inputs === 'data_persentase' ? (
-            <InputDataPersentase hideFunc={this.hidePopup}/>
-          ) : '' }          
+          <InputData
+            hideFunc={this.hidePopup} 
+            data={data}
+            turnLoading={this.props.turnLoading}
+            getDataKegiatan={this.props.getDataKegiatan}
+          />  
         </div>
       </div>
     )
   }
 }
 
-class InputDataKontrak extends React.Component {
+class InputData extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      id: null,
       anggaran: 0,
       nilai_kontrak: 0,
-      nomor_kontrak: '',
+      no_kontrak: '',
       tgl_kontrak: '',
       tgl_mulai: '',
-      tgl_selesai: ''
+      tgl_selesai: '',
+      penyedia_kegiatan: '',
+      nama_direktur: '',
+      no_rekening: '',
+      telepon: '',
+      npwp: '',
+      no_spk: '',
+      tgl_spk: '',
+      no_spmk: '',
+      tgl_spmk: '',
+      persentase_fisik: '',
+      persentase_keuangan: '',
+      sumber_dana: '',
+      sp2d: '',
+      keterangan: ''
     }
+  }
+  UNSAFE_componentWillReceiveProps(props) {
+    this.setState({
+      id: props.data.id,
+      anggaran: props.data.anggaran,
+      nilai_kontrak: props.data.nilai_kontrak,
+      no_kontrak: props.data.no_kontrak,
+      tgl_kontrak: props.data.tgl_kontrak,
+      tgl_mulai: props.data.tgl_mulai, 
+      tgl_selesai: props.data.tgl_selesai,
+      penyedia_kegiatan: props.data.penyedia_kegiatan,
+      nama_direktur: props.data.nama_direktur,
+      no_rekening: props.data.no_rekening,
+      telepon: props.data.telepon,
+      npwp: props.data.npwp,
+      no_spk: props.data.no_spk,
+      tgl_spk: props.data.tgl_spk,
+      no_spmk: props.data.no_spmk,
+      tgl_spmk: props.data.tgl_spmk,
+      persentase_fisik: props.data.persentase_fisik,
+      persentase_keuangan: props.data.persentase_keuangan,
+      sumber_dana: props.data.sumber_dana,
+      sp2d: props.data.sp2d,
+      keterangan: props.data.keterangan
+    })
+  }
+  updateData = () => {
+    let url = Url.api + 'input_kegiatan';
+    this.props.turnLoading('on')
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(this.state)
+    }).then(res => res.text()).then(() => {
+      this.props.getDataKegiatan()
+      this.props.turnLoading('off')
+    })
   }
   changeData = (prop) => (e) => {
     this.setState({
+      ...this.state,
       [prop]: e.target.value
     })
   }
   render() {
+    console.log('HIRAUKAN ERROR NYA!')
     return (
       <React.Fragment>
+        <div><b>Data Kontrak</b></div>
         <div className="input-value-group">
           <label>Anggaran</label>
           <input 
@@ -100,7 +134,8 @@ class InputDataKontrak extends React.Component {
             type="number"
             placeholder="Anggaran"
             spellCheck="false"
-            onKeyUp={this.changeData('anggaran')}
+            value={this.state.anggaran}
+            onChange={this.changeData('anggaran')}
           />
         </div>
         <div className="input-value-group">
@@ -110,7 +145,8 @@ class InputDataKontrak extends React.Component {
             type="number"
             placeholder="Nilai Kontrak"
             spellCheck="false"
-            onKeyUp={this.changeData('nilai_kontrak')}
+            value={this.state.nilai_kontrak}
+            onChange={this.changeData('nilai_kontrak')}
           />
         </div>
         <div className="input-value-group">
@@ -120,7 +156,8 @@ class InputDataKontrak extends React.Component {
             type="text"
             placeholder="Nomor Kontrak"
             spellCheck="false"
-            onKeyUp={this.changeData('nomor_kontrak')}
+            value={this.state.no_kontrak}
+            onChange={this.changeData('no_kontrak')}
           />
         </div>
         <div className="input-value-group">
@@ -130,7 +167,8 @@ class InputDataKontrak extends React.Component {
             type="date"
             placeholder="Tanggal Kontrak"
             spellCheck="false"
-            onKeyUp={this.changeData('tgl_kontrak')}
+            value={this.state.tgl_kontrak}
+            onChange={this.changeData('tgl_kontrak')}
           />
         </div>
         <div className="input-value-group">
@@ -140,7 +178,8 @@ class InputDataKontrak extends React.Component {
             type="date"
             placeholder="Tanggal Mulai"
             spellCheck="false"
-            onKeyUp={this.changeData('tgl_mulai')}
+            value={this.state.tgl_mulai}
+            onChange={this.changeData('tgl_mulai')}
           />
         </div>
         <div className="input-value-group">
@@ -150,41 +189,12 @@ class InputDataKontrak extends React.Component {
             type="date"
             placeholder="Tanggal Selesai"
             spellCheck="false"
-            onKeyUp={this.changeData('tgl_selesai')}
+            value={this.state.tgl_selesai}
+            onChange={this.changeData('tgl_selesai')}
           />
         </div>
-        <div className="input-value-action">
-          <div className="input-value-no" onClick={this.props.hideFunc}>BATAL</div>
-          <div className="input-value-yes">SIMPAN</div>
-        </div>
-      </React.Fragment>
-    )
-  }
-}
-
-class InputDataPerusahaan extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      nama_perusahaan: '',
-      alamat: '',
-      rekening: '',
-      telepon: '',
-      npwp: '',
-      no_spk: '',
-      tgl_spk: '',
-      no_spmk: '',
-      tgl_spmk: ''
-    }
-  }
-  changeData = (prop) => (e) => {
-    this.setState({
-      [prop]: e.target.value
-    })
-  }
-  render() {
-    return (
-      <React.Fragment>
+        <p></p>
+        <div><b>Data Perusahaan</b></div>
         <div className="input-value-group">
           <label>Nama Perusahaan</label>
           <input 
@@ -192,17 +202,19 @@ class InputDataPerusahaan extends React.Component {
             type="text"
             placeholder="Nama Perusahaan"
             spellCheck="false"
-            onKeyUp={this.changeData('nama_perushaan')}
+            value={this.state.penyedia_kegiatan}
+            onChange={this.changeData('penyedia_kegiatan')}
           />
         </div>
         <div className="input-value-group">
-          <label>Alamat</label>
+          <label>Nama Direktur</label>
           <input 
             className="input-value-input"
             type="text"
-            placeholder="Alamat"
+            placeholder="Nama Direktur"
             spellCheck="false"
-            onKeyUp={this.changeData('alamat')}
+            value={this.state.nama_direktur}
+            onChange={this.changeData('nama_direktur')}
           />
         </div>
         <div className="input-value-group">
@@ -212,7 +224,8 @@ class InputDataPerusahaan extends React.Component {
             type="text"
             placeholder="Rekening"
             spellCheck="false"
-            onKeyUp={this.changeData('rekening')}
+            value={this.state.no_rekening}
+            onChange={this.changeData('no_rekening')}
           />
         </div>
         <div className="input-value-group">
@@ -222,7 +235,8 @@ class InputDataPerusahaan extends React.Component {
             type="text"
             placeholder="No Telepon"
             spellCheck="false"
-            onKeyUp={this.changeData('telepon')}
+            value={this.state.telepon}
+            onChange={this.changeData('telepon')}
           />
         </div>
         <div className="input-value-group">
@@ -232,7 +246,8 @@ class InputDataPerusahaan extends React.Component {
             type="text"
             placeholder="NPWP"
             spellCheck="false"
-            onKeyUp={this.changeData('npwp')}
+            value={this.state.npwp}
+            onChange={this.changeData('npwp')}
           />
         </div>
         <div className="input-value-group">
@@ -242,7 +257,8 @@ class InputDataPerusahaan extends React.Component {
             type="text"
             placeholder="No SPK"
             spellCheck="false"
-            onKeyUp={this.changeData('no_spk')}
+            value={this.state.no_spk}
+            onChange={this.changeData('no_spk')}
           />
         </div>
         <div className="input-value-group">
@@ -252,7 +268,8 @@ class InputDataPerusahaan extends React.Component {
             type="date"
             placeholder="Tanggal SPK"
             spellCheck="false"
-            onKeyUp={this.changeData('tgl_spk')}
+            value={this.state.tgl_spk}
+            onChange={this.changeData('tgl_spk')}
           />
         </div>
         <div className="input-value-group">
@@ -262,7 +279,8 @@ class InputDataPerusahaan extends React.Component {
             type="text"
             placeholder="No SPMK"
             spellCheck="false"
-            onKeyUp={this.changeData('no_spmk')}
+            value={this.state.no_spmk}
+            onChange={this.changeData('no_spmk')}
           />
         </div>
         <div className="input-value-group">
@@ -272,55 +290,78 @@ class InputDataPerusahaan extends React.Component {
             type="date"
             placeholder="Tanggal SPMK"
             spellCheck="false"
-            onKeyUp={this.changeData('tgl_spmk')}
+            value={this.state.tgl_spmk}
+            onChange={this.changeData('tgl_spmk')}
           />
         </div>
-        <div className="input-value-action">
-          <div className="input-value-no" onClick={this.props.hideFunc}>BATAL</div>
-          <div className="input-value-yes">SIMPAN</div>
-        </div>
-      </React.Fragment>
-    )
-  }
-}
-
-class InputDataPersentase extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      fisik: 0,
-      keuangan: 0
-    }
-  }
-  changeData = (prop) => (e) => {
-    this.setState({
-      [prop]: e.target.value
-    })
-  }
-  render() {
-    return (
-      <React.Fragment>
+        <p></p>
+        <div><b>Data Persentase</b></div>
         <div className="input-value-group">
-          <label>Persentase Fisik</label>
+          <label>Persentase Fisik (%)</label>
           <input 
             className="input-value-input"
             type="number"
-            placeholder="Persentase Fisik"
+            placeholder="Persentase Fisik (%)"
             spellCheck="false"
+            value={this.state.persentase_fisik}
+            onChange={this.changeData('persentase_fisik')}
           />
         </div>
         <div className="input-value-group">
-          <label>Persentase Keuangan</label>
+          <label>Persentase Keuangan (%)</label>
           <input 
             className="input-value-input"
             type="number"
-            placeholder="Persentase Keuangan"
+            placeholder="Persentase Keuangan (%)"
             spellCheck="false"
+            value={this.state.persentase_keuangan}
+            onChange={this.changeData('persentase_keuangan')}
+          />
+        </div>
+        <p></p>
+        <div><b>Data Lainnya</b></div>
+        <div className="input-value-group">
+          <label>Sumber Dana</label>
+          <input 
+            className="input-value-input"
+            type="text"
+            placeholder="Sumber Dana"
+            spellCheck="false"
+            value={this.state.sumber_dana}
+            onChange={this.changeData('sumber_dana')}
+          />
+        </div>
+        <div className="input-value-group">
+          <label>SP2D</label>
+          <input 
+            className="input-value-input"
+            type="number"
+            placeholder="SP2D"
+            spellCheck="false"
+            value={this.state.sp2d}
+            onChange={this.changeData('sp2d')}
+          />
+        </div>
+        <div className="input-value-group">
+          <label>Keterangan</label>
+          <input 
+            className="input-value-input"
+            type="text"
+            placeholder="Keterangan"
+            spellCheck="false"
+            value={this.state.keterangan}
+            onChange={this.changeData('keterangan')}
           />
         </div>
         <div className="input-value-action">
-          <div className="input-value-no" onClick={this.props.hideFunc}>BATAL</div>
-          <div className="input-value-yes">SIMPAN</div>
+          <div 
+            className="input-value-no" 
+            onClick={this.props.hideFunc}
+          >BATAL</div>
+          <div 
+            className="input-value-yes" 
+            onClick={this.updateData}
+          >SIMPAN</div>
         </div>
       </React.Fragment>
     )
