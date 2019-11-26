@@ -3,6 +3,7 @@ import '../../css/login.css'
 import { PersonOutline, LockOutlined } from '@material-ui/icons'
 import { Link } from 'react-router-dom'
 import Url from '../../API'
+import Bg from '../other/Bg'
 
 export default class Root extends React.Component {
   constructor(props) {
@@ -40,7 +41,7 @@ export default class Root extends React.Component {
     }).then(res => res.json()).then(res => {
       if (res.login !== false) {
         window.localStorage.setItem('user', JSON.stringify(res));
-        window.location = '/#/menu';
+        window.location = '/menu';
       } else {
         this.loginError()
       }
@@ -54,6 +55,7 @@ export default class Root extends React.Component {
   render() {
     return (
       <div className="login-root">
+        <Bg />
         <div className="login-box">
           <div className="login-title">SiMolek</div>
           <div className="login-input">

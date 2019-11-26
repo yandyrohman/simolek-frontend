@@ -5,6 +5,7 @@ import Programs from './Program'
 import Url from '../../API'
 import Loading from '../other/Loading'
 import Input from './Input'
+import Bg from '../other/Bg'
 
 export default class Root extends React.Component {
   constructor(props) {
@@ -50,6 +51,7 @@ export default class Root extends React.Component {
     let { data, loading, popup_show, popup_caption, popup_data } = this.state;
     return (
       <div className="input-root">
+        <Bg />
         <div className="input-list">
           <Back 
             caption="Input Kegiatan"

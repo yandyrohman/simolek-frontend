@@ -6,6 +6,7 @@ import Loading from '../other/Loading'
 import Url from '../../API'
 import Back from '../other/Back'
 import Detail from './Detail'
+import Bg from '../other/Bg'
 
 export default class Root extends React.Component {
   constructor(props) {
@@ -111,6 +112,7 @@ export default class Root extends React.Component {
   render() {
     return (
       <div className="kegiatan-root">
+        <Bg />
         <Loading loading={this.state.loading}/>
         <div className="kegiatan-list">
           <Back 

@@ -7,7 +7,7 @@ export default class Back extends React.Component {
   render() {
     return (
       <div className="back">
-        <Link to="/menu">
+        <Link to={this.props.to ? this.props.to : '/menu'}>
           <ArrowBack />
         </Link>
         <div className="back-title">

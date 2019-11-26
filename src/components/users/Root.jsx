@@ -7,6 +7,7 @@ import { Add } from '@material-ui/icons'
 import Loading from '../other/Loading'
 import Form from './Form'
 import Delete from './Delete'
+import Bg from '../other/Bg'
 
 export default class Root extends React.Component {
   constructor(props) {
@@ -209,6 +210,7 @@ export default class Root extends React.Component {
     ));
     return (
       <div className="users-root">
+        <Bg />
         <div className="users-list">
           <Back 
             caption="Kelola Pengguna"

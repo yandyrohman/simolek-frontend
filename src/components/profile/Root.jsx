@@ -2,6 +2,7 @@ import React from 'react'
 import Back from '../other/Back'
 import '../../css/profile.css'
 import { Email, Call, Room, Person } from '@material-ui/icons'
+import Bg from '../other/Bg'
 
 export default class Root extends React.Component {
   render() {
@@ -9,6 +10,7 @@ export default class Root extends React.Component {
     let user = data.login;
     return (
       <div className="profile-root">
+        <Bg />
         <div className="profile-list">
           <Back 
             caption="Profile"

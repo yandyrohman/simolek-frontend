@@ -1,5 +1,6 @@
 import React from 'react'
 import { Close } from '@material-ui/icons'
+import Url from '../../API'
 
 export default class Detail extends React.Component {
   render() {
@@ -103,6 +104,7 @@ export default class Detail extends React.Component {
             />
             <SubKegiatan 
               label="File Kontrak"
+              value={data.file_kontrak}
               download={true}
             />
             <SubKegiatan 
@@ -139,11 +141,24 @@ export default class Detail extends React.Component {
 class SubKegiatan extends React.Component {
   render() {
     let { label, value, download } = this.props;
+    let href = `${Url.api}download_file_kontrak/${value}`;
     return (
       <div className="kegiatan-detail-item">
         <div className="kegiatan-detail-item-label">{label}</div>
         <div className="kegiatan-detail-item-value">
-          {download ? <a href="/">Unduh</a> : value}
+          {
+            download ? (
+              <React.Fragment>
+                {
+                  value === '-' ? (
+                    <span className="kegiatan-detail-item-warn">File Kontrak Tidak Tersedia.</span>
+                  ) : (
+                    <a href={href}>Unduh</a>
+                  )
+                }
+              </React.Fragment>
+            ) : value
+          }
         </div>
       </div>
     )

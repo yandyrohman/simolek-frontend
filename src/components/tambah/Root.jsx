@@ -5,6 +5,10 @@ import Programs from './Program'
 import Loading from '../other/Loading'
 import Tambah from './Tambah'
 import Back from '../other/Back'
+import { CloudUpload, Person } from '@material-ui/icons'
+import { Link } from 'react-router-dom'
+import Bg from '../other/Bg'
+import Dialog from './Dialog'
 
 export default class Root extends React.Component {
   constructor(props) {
@@ -20,7 +24,8 @@ export default class Root extends React.Component {
         etc: '',
         id_program: null,
         id_kegiatan: null
-      }
+      },
+      dialog_show: false
     }
   }
   componentDidMount() {
@@ -68,6 +73,12 @@ export default class Root extends React.Component {
       loading: value === 'on' ? true : false
     })
   }
+  openDialog = () => {
+    this.setState({dialog_show: true})
+  }
+  hideDialog = () => {
+    this.setState({dialog_show: false})
+  }
   render() {
     let { 
       data, 
@@ -75,10 +86,18 @@ export default class Root extends React.Component {
       popup_show, 
       popup_type,
       popup_data,
-      users
+      users,
+      dialog_show
     } = this.state;
     return (
       <div className="tambah-root">
+        <Bg />
+        <Dialog 
+          show={dialog_show}
+          hideDialog={this.hideDialog}
+          turnLoading={this.turnLoading}
+          getAllDatas={this.getAllDatas}
+        />
         <Tambah 
           show={popup_show} 
           type={popup_type}
@@ -94,6 +113,15 @@ export default class Root extends React.Component {
             caption="Kelola Kegiatan"
             hint="Tambah atau hapus kegiatan"
           />
+          <div className="tambah-button" onClick={this.openDialog}>
+            <span>Import Kegiatan&nbsp;</span>
+            <CloudUpload />  
+          </div>
+          <Link to="/input_pejabat" className="tambah-button">
+            <span>Input Pejabat&nbsp;</span>
+            <Person />  
+          </Link>
+          <div className="tambah-title">Data Kegiatan</div>
           <Programs 
             data={data}
             openPopup={this.openPopup}

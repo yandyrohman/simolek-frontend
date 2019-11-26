@@ -1,5 +1,11 @@
 import React from 'react'
 import Url from '../../API'
+import InputKontrak from './data/InputKontrak'
+import InputPerusahaan from './data/InputPerusahaan'
+import InputAdendum from './data/InputAdendum'
+import InputSp2d from './data/InputSp2d'
+import InputFile from './data/InputFile'
+import InputPersentase from './data/InputPersentase'
 
 export default class DetailNext extends React.Component {
   constructor(props) {
@@ -7,102 +13,110 @@ export default class DetailNext extends React.Component {
     this.state = {
       show: false,
       caption: '',
-      active_tab: 0,
-      active_inputs: 'data_kontrak',
-      data: []
+      active_inputs: '',
+      id_sub_kegiatan: null,
+      data_adendum: {
+        adendum_1_tgl: '',
+        adendum_1_nomor: '',
+        adendum_1_waktu: '',
+        adendum_1_target: 0,
+        adendum_1_nilai: '',
+        adendum_1_ket: '',
+        adendum_2_tgl: '',
+        adendum_2_nomor: '',
+        adendum_2_waktu: '',
+        adendum_2_target: 0,
+        adendum_2_nilai: '',
+        adendum_2_ket: '',
+        adendum_3_tgl: '',
+        adendum_3_nomor: '',
+        adendum_3_waktu: '',
+        adendum_3_target: 0,
+        adendum_3_nilai: '',
+        adendum_3_ket: '',
+      },
+      data_sp2d: {
+        sp2d_1: 0,
+        sp2d_1_ket: '',
+        sp2d_2: 0,
+        sp2d_2_ket: '',
+        sp2d_3: 0,
+        sp2d_3_ket: '',
+        sp2d_4: 0,
+        sp2d_4_ket: '',
+        sp2d_5: 0,
+        sp2d_5_ket: '',
+      },
+      data_kontrak: {
+        anggaran: 0,
+        nilai_kontrak: 0,
+        no_kontrak: '',
+        tgl_kontrak: '',
+        tgl_mulai: '',
+        tgl_selesai: '',
+        sumber_dana: ''
+      },
+      data_perusahaan: {
+        penyedia_kegiatan: '',
+        nama_direktur: '',
+        no_rekening: '',
+        telepon: '',
+        npwp: '',
+        no_spk: '',
+        tgl_spk: '',
+        no_spmk: '',
+        tgl_spmk: ''
+      },
+      data_persentase: {
+        persentase_fisik: 0,
+        persentase_keuangan: 0,
+      },
+      data_file: {
+        file_kontrak: ''
+      }
     }
   }
   UNSAFE_componentWillReceiveProps({show, caption, data}) {
     this.setState({
       show: show,
       caption: caption,
-      data: data
+      id_sub_kegiatan: data.id
     })
   }
   hidePopup = () => {
+    this.setState({show: false})
+  }
+  hideInput = () => {
+    this.setState({active_inputs: ''})
+  }
+  changeTab = (tabName) => {
+    let id = this.state.id_sub_kegiatan;
+    let url = Url.api + 'show_kegiatan/' + tabName + '/' + id;
+    this.props.turnLoading('on')
+    fetch(url)
+      .then(res => res.json())
+      .then(data => {
+        this.props.turnLoading('off')
+        this.setState({
+          ...this.state,
+          active_inputs: tabName,
+          [tabName]: data[0]
+        })
+      })
+  }
+  changeData = (data, prop, value=false) => (e) => {
     this.setState({
-      show: false
+      ...this.state,
+      [data]: {
+        ...this.state[data],
+        [prop]: value ? value : e.target.value
+      }
     })
   }
-  changeTab = (tabName, tabIndex) => {
-    this.setState({
-      active_tab: tabIndex,
-      active_inputs: tabName
-    })
-  }
-  render() {
-    let { show, caption, data } = this.state;
-    let display = show === true ? 'flex' : 'none';
-    return (
-      <div className="input-value-popup" style={{display: display}}>
-        <div className="input-value-box">
-          <h3 className="input-value-title">{`Input Kegiatan ${caption}`}</h3>
-          <InputData
-            hideFunc={this.hidePopup} 
-            data={data}
-            turnLoading={this.props.turnLoading}
-            getDataKegiatan={this.props.getDataKegiatan}
-          />  
-        </div>
-      </div>
-    )
-  }
-}
-
-class InputData extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      id: null,
-      anggaran: 0,
-      nilai_kontrak: 0,
-      no_kontrak: '',
-      tgl_kontrak: '',
-      tgl_mulai: '',
-      tgl_selesai: '',
-      penyedia_kegiatan: '',
-      nama_direktur: '',
-      no_rekening: '',
-      telepon: '',
-      npwp: '',
-      no_spk: '',
-      tgl_spk: '',
-      no_spmk: '',
-      tgl_spmk: '',
-      persentase_fisik: '',
-      persentase_keuangan: '',
-      sumber_dana: '',
-      sp2d: '',
-      keterangan: ''
-    }
-  }
-  UNSAFE_componentWillReceiveProps(props) {
-    this.setState({
-      id: props.data.id,
-      anggaran: props.data.anggaran,
-      nilai_kontrak: props.data.nilai_kontrak,
-      no_kontrak: props.data.no_kontrak,
-      tgl_kontrak: props.data.tgl_kontrak,
-      tgl_mulai: props.data.tgl_mulai, 
-      tgl_selesai: props.data.tgl_selesai,
-      penyedia_kegiatan: props.data.penyedia_kegiatan,
-      nama_direktur: props.data.nama_direktur,
-      no_rekening: props.data.no_rekening,
-      telepon: props.data.telepon,
-      npwp: props.data.npwp,
-      no_spk: props.data.no_spk,
-      tgl_spk: props.data.tgl_spk,
-      no_spmk: props.data.no_spmk,
-      tgl_spmk: props.data.tgl_spmk,
-      persentase_fisik: props.data.persentase_fisik,
-      persentase_keuangan: props.data.persentase_keuangan,
-      sumber_dana: props.data.sumber_dana,
-      sp2d: props.data.sp2d,
-      keterangan: props.data.keterangan
-    })
-  }
-  updateData = () => {
-    let url = Url.api + 'input_kegiatan';
+  updateData = (type) => {
+    let url = Url.api + 'input_kegiatan/' + type;
+    let data = this.state[type];
+    data = {id: this.state.id_sub_kegiatan, ...data};
     this.props.turnLoading('on')
     fetch(url, {
       method: 'POST',
@@ -110,260 +124,98 @@ class InputData extends React.Component {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(this.state)
+      body: JSON.stringify(data)
     }).then(res => res.text()).then(() => {
-      this.props.getDataKegiatan()
       this.props.turnLoading('off')
     })
   }
-  changeData = (prop) => (e) => {
-    this.setState({
-      ...this.state,
-      [prop]: e.target.value
-    })
-  }
   render() {
-    console.log('HIRAUKAN ERROR NYA!')
+    let { show, caption, active_inputs } = this.state;
+    let display = show === true ? 'flex' : 'none';
+    let displayInput = active_inputs ? 'none' : 'block';
     return (
-      <React.Fragment>
-        <div><b>Data Kontrak</b></div>
-        <div className="input-value-group">
-          <label>Anggaran</label>
-          <input 
-            className="input-value-input"
-            type="number"
-            placeholder="Anggaran"
-            spellCheck="false"
-            value={this.state.anggaran}
-            onChange={this.changeData('anggaran')}
-          />
+      <div className="input-value-popup" style={{display: display}}>
+        <div className="input-value-box">
+          <h3 className="input-value-title">{`Input Kegiatan ${caption}`}</h3>
+          { active_inputs === 'data_kontrak' ? (
+              <InputKontrak
+                hideInput={this.hideInput} 
+                data={this.state.data_kontrak}
+                changeData={this.changeData}
+                updateData={this.updateData}
+              />
+            ) : active_inputs === 'data_perusahaan' ? (
+              <InputPerusahaan
+                hideInput={this.hideInput} 
+                data={this.state.data_perusahaan}
+                changeData={this.changeData}
+                updateData={this.updateData}
+              />
+            ) : active_inputs === 'data_adendum' ? (
+              <InputAdendum
+                hideInput={this.hideInput} 
+                data={this.state.data_adendum}
+                changeData={this.changeData}
+                updateData={this.updateData}
+              /> 
+            ) : active_inputs === 'data_sp2d' ? (
+              <InputSp2d
+                hideInput={this.hideInput} 
+                data={this.state.data_sp2d}
+                changeData={this.changeData}
+                updateData={this.updateData}
+              /> 
+            ) : active_inputs === 'data_file' ? (
+              <InputFile
+                hideInput={this.hideInput} 
+                data={this.state.data_file}
+                changeData={this.changeData}
+                updateData={this.updateData}
+                turnLoading={this.props.turnLoading}
+                id={this.state.id_sub_kegiatan}
+              /> 
+            ) : active_inputs === 'data_persentase' ? (
+              <InputPersentase
+                hideInput={this.hideInput} 
+                data={this.state.data_persentase}
+                changeData={this.changeData}
+                updateData={this.updateData}
+              /> 
+            ) : (
+              <div className="input-value-selector" style={{display: displayInput}}>
+                <div 
+                  className="input-value-selector-item"
+                  onClick={() => this.changeTab('data_kontrak')}
+                >Data Kontrak</div>
+                <div 
+                  className="input-value-selector-item"
+                  onClick={() => this.changeTab('data_perusahaan')}
+                >Data Perusahaan</div>
+                <div 
+                  className="input-value-selector-item"
+                  onClick={() => this.changeTab('data_file')}
+                >Upload File Kontrak</div>
+                <div 
+                  className="input-value-selector-item"
+                  onClick={() => this.changeTab('data_persentase')}
+                >Data Persentase</div>
+                <div 
+                  className="input-value-selector-item"
+                  onClick={() => this.changeTab('data_sp2d')}
+                >Data SP2D</div>
+                <div 
+                  className="input-value-selector-item"
+                  onClick={() => this.changeTab('data_adendum')}
+                >Data Adendum</div>
+                <div 
+                  className="input-value-selector-item"
+                  onClick={this.hidePopup}
+                ><b>Batal</b></div>
+              </div>
+            )
+          }
         </div>
-        <div className="input-value-group">
-          <label>Nilai Kontrak</label>
-          <input 
-            className="input-value-input"
-            type="number"
-            placeholder="Nilai Kontrak"
-            spellCheck="false"
-            value={this.state.nilai_kontrak}
-            onChange={this.changeData('nilai_kontrak')}
-          />
-        </div>
-        <div className="input-value-group">
-          <label>Nomor Kontrak</label>
-          <input 
-            className="input-value-input"
-            type="text"
-            placeholder="Nomor Kontrak"
-            spellCheck="false"
-            value={this.state.no_kontrak}
-            onChange={this.changeData('no_kontrak')}
-          />
-        </div>
-        <div className="input-value-group">
-          <label>Tanggal Kontrak</label>
-          <input 
-            className="input-value-input"
-            type="date"
-            placeholder="Tanggal Kontrak"
-            spellCheck="false"
-            value={this.state.tgl_kontrak}
-            onChange={this.changeData('tgl_kontrak')}
-          />
-        </div>
-        <div className="input-value-group">
-          <label>Tanggal Mulai</label>
-          <input 
-            className="input-value-input"
-            type="date"
-            placeholder="Tanggal Mulai"
-            spellCheck="false"
-            value={this.state.tgl_mulai}
-            onChange={this.changeData('tgl_mulai')}
-          />
-        </div>
-        <div className="input-value-group">
-          <label>Tanggal Selesai</label>
-          <input 
-            className="input-value-input"
-            type="date"
-            placeholder="Tanggal Selesai"
-            spellCheck="false"
-            value={this.state.tgl_selesai}
-            onChange={this.changeData('tgl_selesai')}
-          />
-        </div>
-        <p></p>
-        <div><b>Data Perusahaan</b></div>
-        <div className="input-value-group">
-          <label>Nama Perusahaan</label>
-          <input 
-            className="input-value-input"
-            type="text"
-            placeholder="Nama Perusahaan"
-            spellCheck="false"
-            value={this.state.penyedia_kegiatan}
-            onChange={this.changeData('penyedia_kegiatan')}
-          />
-        </div>
-        <div className="input-value-group">
-          <label>Nama Direktur</label>
-          <input 
-            className="input-value-input"
-            type="text"
-            placeholder="Nama Direktur"
-            spellCheck="false"
-            value={this.state.nama_direktur}
-            onChange={this.changeData('nama_direktur')}
-          />
-        </div>
-        <div className="input-value-group">
-          <label>Rekening</label>
-          <input 
-            className="input-value-input"
-            type="text"
-            placeholder="Rekening"
-            spellCheck="false"
-            value={this.state.no_rekening}
-            onChange={this.changeData('no_rekening')}
-          />
-        </div>
-        <div className="input-value-group">
-          <label>No Telepon</label>
-          <input 
-            className="input-value-input"
-            type="text"
-            placeholder="No Telepon"
-            spellCheck="false"
-            value={this.state.telepon}
-            onChange={this.changeData('telepon')}
-          />
-        </div>
-        <div className="input-value-group">
-          <label>NPWP</label>
-          <input 
-            className="input-value-input"
-            type="text"
-            placeholder="NPWP"
-            spellCheck="false"
-            value={this.state.npwp}
-            onChange={this.changeData('npwp')}
-          />
-        </div>
-        <div className="input-value-group">
-          <label>No SPK</label>
-          <input 
-            className="input-value-input"
-            type="text"
-            placeholder="No SPK"
-            spellCheck="false"
-            value={this.state.no_spk}
-            onChange={this.changeData('no_spk')}
-          />
-        </div>
-        <div className="input-value-group">
-          <label>Tanggal SPK</label>
-          <input 
-            className="input-value-input"
-            type="date"
-            placeholder="Tanggal SPK"
-            spellCheck="false"
-            value={this.state.tgl_spk}
-            onChange={this.changeData('tgl_spk')}
-          />
-        </div>
-        <div className="input-value-group">
-          <label>No SPMK</label>
-          <input 
-            className="input-value-input"
-            type="text"
-            placeholder="No SPMK"
-            spellCheck="false"
-            value={this.state.no_spmk}
-            onChange={this.changeData('no_spmk')}
-          />
-        </div>
-        <div className="input-value-group">
-          <label>Tanggal SPMK</label>
-          <input 
-            className="input-value-input"
-            type="date"
-            placeholder="Tanggal SPMK"
-            spellCheck="false"
-            value={this.state.tgl_spmk}
-            onChange={this.changeData('tgl_spmk')}
-          />
-        </div>
-        <p></p>
-        <div><b>Data Persentase</b></div>
-        <div className="input-value-group">
-          <label>Persentase Fisik (%)</label>
-          <input 
-            className="input-value-input"
-            type="number"
-            placeholder="Persentase Fisik (%)"
-            spellCheck="false"
-            value={this.state.persentase_fisik}
-            onChange={this.changeData('persentase_fisik')}
-          />
-        </div>
-        <div className="input-value-group">
-          <label>Persentase Keuangan (%)</label>
-          <input 
-            className="input-value-input"
-            type="number"
-            placeholder="Persentase Keuangan (%)"
-            spellCheck="false"
-            value={this.state.persentase_keuangan}
-            onChange={this.changeData('persentase_keuangan')}
-          />
-        </div>
-        <p></p>
-        <div><b>Data Lainnya</b></div>
-        <div className="input-value-group">
-          <label>Sumber Dana</label>
-          <input 
-            className="input-value-input"
-            type="text"
-            placeholder="Sumber Dana"
-            spellCheck="false"
-            value={this.state.sumber_dana}
-            onChange={this.changeData('sumber_dana')}
-          />
-        </div>
-        <div className="input-value-group">
-          <label>SP2D</label>
-          <input 
-            className="input-value-input"
-            type="number"
-            placeholder="SP2D"
-            spellCheck="false"
-            value={this.state.sp2d}
-            onChange={this.changeData('sp2d')}
-          />
-        </div>
-        <div className="input-value-group">
-          <label>Keterangan</label>
-          <input 
-            className="input-value-input"
-            type="text"
-            placeholder="Keterangan"
-            spellCheck="false"
-            value={this.state.keterangan}
-            onChange={this.changeData('keterangan')}
-          />
-        </div>
-        <div className="input-value-action">
-          <div 
-            className="input-value-no" 
-            onClick={this.props.hideFunc}
-          >BATAL</div>
-          <div 
-            className="input-value-yes" 
-            onClick={this.updateData}
-          >SIMPAN</div>
-        </div>
-      </React.Fragment>
+      </div>
     )
   }
 }

@@ -270,6 +270,11 @@
             text-decoration: underline;
           }
 
+        .kegiatan-detail-item-warn {
+          color: #f44336;
+          font-weight: normal;
+        }
+
   .kegiatan-detail-close {
     position: absolute;
     width: 30px;
@@ -281,3 +286,4 @@
     align-items: center;
     color: #fff;
   }
+  

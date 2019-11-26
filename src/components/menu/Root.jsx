@@ -12,6 +12,7 @@ import {
   Assessment,
   SupervisorAccount
 } from '@material-ui/icons' 
+import Bg from '../other/Bg'
 
 export default class Root extends React.Component {
   constructor(props) {
@@ -33,6 +34,7 @@ export default class Root extends React.Component {
     let { role, name, position } = user.login;
     return (
       <div className="menu-root">
+        <Bg />
         <div className="menu-title">
           <h3>SiMolek</h3>
           <small>Pantau kegiatan dinas dengan mudah!</small>

@@ -1,0 +1,21 @@
+.bg-img {
+  position: fixed;
+  width: 100%;
+  height: auto;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  filter: brightness(0.2);
+}
+
+@media only screen and (max-width: 800px) {
+  .bg-img {
+    position: fixed;
+    width: auto;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    filter: brightness(0.2);
+  }
+}

@@ -18,6 +18,7 @@
     top: 0;
     left: 0;
     z-index: -1;
+    filter: brightness(0.5)
   }
 
   .menu-title {
@@ -32,12 +33,12 @@
 
     .menu-title h3 {
       font-size: 40px;
-      color: #333;
+      color: #fff;
     }
 
     .menu-title small {
       font-size: 18px;
-      color: #333;
+      color: #fff;
     }
 
   .menu-profile {
@@ -47,7 +48,7 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    color: #333;
+    color: #fff;
   }
 
     .menu-profile-photo {
@@ -89,16 +90,18 @@
       justify-content: center;
       align-items: center;
       flex-direction: column;
-      background-image: linear-gradient(30deg, 
+      /* background-image: linear-gradient(30deg, 
         rgba(255, 235, 59, 1),
         rgba(255, 255, 255, 0.4)
-      );
+      ); */
+      background: rgba(255,255,255,0.2);
       user-select: none;
       outline: none;
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0) !important;
       transition: 0.2s;
-      box-shadow: 0 8px 6px -6px rgba(0,0,0,0.5);
+      /* box-shadow: 0 8px 6px -6px rgba(0,0,0,0.5); */
       border-radius: 5px;
+      backdrop-filter: blur(10px)
     }
 
     .menu-list a:active,
@@ -110,13 +113,13 @@
       .menu-link svg {
         width: 30px;
         height: 30px;
-        color: #333;
+        color: #fff;
         margin-bottom: 10px;
       }
 
       .menu-list a span,
       .menu-link span {
-        color: #333;
+        color: #fff;
         text-align: center;
         font-size: 15px;
       }

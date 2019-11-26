@@ -3,6 +3,7 @@ import Back from '../other/Back'
 import '../../css/progres.css'
 import Url from '../../API'
 import Loading from '../other/Loading'
+import Bg from '../other/Bg'
 
 export default class Root extends React.Component {
   constructor(props) {
@@ -30,6 +31,7 @@ export default class Root extends React.Component {
     let { datas, loading } = this.state;
     return (
       <div className="progres-root">
+        <Bg />
         <div className="progres-list">
           <Back 
             caption="Progres Kegiatan"
