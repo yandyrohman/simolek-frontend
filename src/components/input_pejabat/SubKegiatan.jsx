@@ -8,13 +8,14 @@ export default class SubKegiatan extends React.Component {
       selected: false
     }
   }
-  selectThis = () => {
+  selectThis = (id_detail) => {
     let { selected } = this.state;
     this.setState({selected: !selected})
+    this.props.putIdDetail(id_detail)
   }
   render() {
     let { selected } = this.state;
-    let { value, indexDetail, indexKegiatan, indexProgram } = this.props;
+    let { data, indexDetail, indexKegiatan, indexProgram } = this.props;
     let style = {
       background: selected ? '#304FFE' : '#FFF',
       color: selected ? '#FFF' : '#000'
@@ -23,10 +24,10 @@ export default class SubKegiatan extends React.Component {
       <div 
         style={style}
         className="input_pejabat-item"
-        onClick={this.selectThis}
+        onClick={() => this.selectThis(data.id)}
       >
         <span>
-          {`${indexProgram + 1}.${indexKegiatan + 1}.${indexDetail + 1} ${value}`}
+          {`${indexProgram + 1}.${indexKegiatan + 1}.${indexDetail + 1} ${data.nama_detail}`}
         </span>
         <div className="input_pejabat-selected">
           {selected ? <Done /> : ''}

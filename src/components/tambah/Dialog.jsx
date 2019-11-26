@@ -64,7 +64,7 @@ export default class Dialog extends Component {
           if( typeof nextCell === 'undefined' ){
               row.push(0);
           } else {
-            if (colNum == 1) {
+            if (colNum === 1) {
               row.push(nextCell.w); // data formatted
             } else {
               row.push(nextCell.v); // data plan

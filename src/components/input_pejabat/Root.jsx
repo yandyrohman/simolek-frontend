@@ -5,6 +5,7 @@ import Loading from '../other/Loading'
 import SubKegiatan from './SubKegiatan'
 import Bg from '../other/Bg'
 import Url from '../../API'
+import ListPejabat from './ListPejabat'
 
 export default class Root extends React.Component {
   constructor(props) {
@@ -13,11 +14,63 @@ export default class Root extends React.Component {
       data_kegiatan: [],
       data_pejabat: [],
       loading: false,
-      data_for_update: {}
+      data_for_update: [],
+      button_select_pejabat: false,
+      show_select_pejabat: false
     }
   }
   putIdDetail = (id_detail) => {
-
+    if (this.state.data_for_update[id_detail] === undefined) {
+      this.setState({
+        data_for_update: {
+          ...this.state.data_for_update,
+          [id_detail]: {
+            id_ppk: 0,
+            id_pptk: 0
+          }
+        } 
+      })
+    } else {
+      let { data_for_update } = this.state;
+      delete data_for_update[id_detail];
+      this.setState({
+        data_for_update: data_for_update
+      })
+    }
+  }
+  openSelectPejabat = () => {
+    this.setState({show_select_pejabat: true})
+  }
+  hideSelectPejabat = () => {
+    this.setState({show_select_pejabat: false})
+  }
+  onChangePejabat = (type) => (e) => {
+    let { data_for_update } = this.state;
+    let dataFinal = data_for_update;
+    for (let id_detail in data_for_update) {
+      dataFinal[id_detail][type] = e.target.value
+    }
+    this.setState({
+      data_for_update: dataFinal
+    })
+  }
+  sendPejabat = () => {
+    let url = Url.api + 'input_pejabat';
+    this.turnLoading('on')
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({data: this.state.data_for_update})
+    }).then(() => {
+      this.hideSelectPejabat()
+      this.getAllDatas()
+      this.turnLoading('off')
+      this.setState({data_for_update: []})
+      // window.location = '/input_pejabat'
+    })
   }
   turnLoading = (value) => {
     this.setState({
@@ -30,7 +83,6 @@ export default class Root extends React.Component {
   getAllDatas = () => {
     this.turnLoading('on')
     this.getDataKegiatan((data, users) => {
-      console.log(data)
       this.setState({
         data_kegiatan: data,
         data_pejabat: users,
@@ -38,9 +90,8 @@ export default class Root extends React.Component {
     })
   }
   getDataKegiatan = (callback) => {
-    let user = JSON.parse(window.localStorage.getItem('user'));
     // eslint-disable-next-line
-    let url = Url.api + 'get_kegiatan' + '/' + user.login.role + '/' + user.login.id;
+    let url = Url.api + 'get_kegiatan_null_pejabat';
     fetch(url).then(res => res.json()).then(data => {
       this.getDataUsers(users => {
         callback(data, users)
@@ -54,7 +105,8 @@ export default class Root extends React.Component {
     })
   }
   render() {
-    let { data_kegiatan } = this.state;
+    let { data_kegiatan, show_select_pejabat, data_pejabat } = this.state;
+    let dataChanged = Object.keys(this.state.data_for_update).length;
     return (
       <div className="input_pejabat-root">
         <Bg />
@@ -67,13 +119,19 @@ export default class Root extends React.Component {
           />
           {
             data_kegiatan.map((program, indexProgram) => (
-              <div className="input_pejabat-program">
+              <div 
+                className="input_pejabat-program" 
+                key={indexProgram}
+              >
                 <div className="input_pejabat-program-title">
                   {`${indexProgram + 1} ${program.nama_program}`}
                 </div>
                 {
                   program.child.map((kegiatan, indexKegiatan) => (
-                    <div className="input_pejabat-kegiatan">
+                    <div 
+                      className="input_pejabat-kegiatan"
+                      key={indexKegiatan}
+                    >
                       <div className="input_pejabat-kegiatan-title">
                         {`${indexProgram + 1}.${indexKegiatan + 1} ${kegiatan.nama_kegiatan}`}
                       </div>
@@ -81,7 +139,8 @@ export default class Root extends React.Component {
                         {
                           kegiatan.grandchild.map((detail, indexDetail) => (
                             <SubKegiatan 
-                              value={detail.nama_detail}
+                              key={detail.id}
+                              data={detail}
                               indexDetail={indexDetail}
                               indexProgram={indexProgram}
                               indexKegiatan={indexKegiatan}
@@ -97,7 +156,21 @@ export default class Root extends React.Component {
             ))
           }
         </div>
-        <div className="input_pejabat-select-pejabat">Pilih Pejabat</div>
+        {
+          dataChanged ? (
+            <div 
+              className="input_pejabat-select-pejabat"
+              onClick={this.openSelectPejabat}
+            >Pilih Pejabat</div>
+          ) : ''
+        }
+        <ListPejabat 
+          show={show_select_pejabat}
+          pejabats={data_pejabat}
+          hideSelectPejabat={this.hideSelectPejabat}
+          onChangePejabat={this.onChangePejabat}
+          sendPejabat={this.sendPejabat}
+        />
       </div>
     )
   }
