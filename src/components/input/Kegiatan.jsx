@@ -12,26 +12,30 @@ export default class Kegiatan extends React.Component {
     }
   }
   render() {
-    let { data, index } = this.props;
+    let { data, index, idProgram } = this.props;
     let kegiatans;
     if (data.length !== 0) {
       kegiatans = data.map((x, i) => {
         return (
           <React.Fragment key={i}>
             <div 
-              className="tambah-kegiatan"
+              className="input-kegiatan"
               onClick={() => this.showChild(`${index}-${i}`)}
             >
-              <b>{i+1}.</b>&nbsp;
+              <b className="input-kegiatan-num">
+                &nbsp;{`${idProgram}.${x.number}`}&nbsp;
+              </b>&nbsp;
               <span>{x.nama_kegiatan}</span>
             </div>
             <div 
-              className="tambah-kegiatan-child"
+              className="input-kegiatan-child"
               id={`kegiatan-child-${index}-${i}`}
             >
               <Details 
                 data={x.grandchild}
                 index={i+1}
+                idProgram={idProgram}
+                numberKegiatan={x.number}
                 namaKegiatan={x.nama_kegiatan}
                 openInput={this.props.openInput}
               />
@@ -41,7 +45,7 @@ export default class Kegiatan extends React.Component {
       });
     } else {
       kegiatans = (
-        <div className="tambah-kegiatan-none">
+        <div className="input-kegiatan-none">
           Program {index} tidak ada kegiatan..
         </div>
       );

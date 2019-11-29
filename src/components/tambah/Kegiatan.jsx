@@ -46,7 +46,7 @@ export default class Kegiatan extends React.Component {
               className="tambah-kegiatan"
               onClick={() => this.showChild(`${indexProgram}-${i}`)}
             >
-              <b>{i+1}.</b>&nbsp;
+              <b>{`${x.id_program}.${x.number}`}&nbsp;</b>&nbsp;
               <span>{x.nama_kegiatan}</span>
               <div 
                 className="tambah-kegiatan-delete"

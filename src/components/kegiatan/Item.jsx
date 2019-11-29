@@ -27,9 +27,11 @@ export default class Item extends React.Component {
           onClick={this.showItemChild} 
           key={index}
         >
-          <div className="kegiatan-item-etc">{index + 1}</div>
           <div className="kegiatan-item-etc" id={`item-${index}`}>
-            {nama_program}
+            <span className="kegiatan-item-num" id={`item-${index}`}>
+              &nbsp;{item.id}&nbsp;
+            </span>&nbsp;
+            <span id={`item-${index}`}>{nama_program}</span>
           </div>
           <div className="kegiatan-item-etc"><KeyboardArrowDown id={`item-${index}`}/></div>
           <div className="kegiatan-child" id={`item-${index}-list`}>
@@ -37,6 +39,7 @@ export default class Item extends React.Component {
               data={child} 
               index={index}
               openDetailPopup={this.props.openDetailPopup}
+              idProgram={item.id}
             />
           </div>
        </div> 

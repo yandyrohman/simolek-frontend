@@ -9,6 +9,7 @@ import Users from '../src/pages/Users'
 import Progres from '../src/pages/Progres'
 import Pejabat from '../src/pages/Pejabat'
 import InputPejabat from '../src/pages/InputPejabat'
+import Histori from '../src/pages/Histori'
 import { Route } from 'react-router-dom'
 
 export default class App extends React.Component {
@@ -25,6 +26,7 @@ export default class App extends React.Component {
         <Route exact path="/progres" component={Progres} />
         <Route exact path="/pejabat" component={Pejabat} />
         <Route exact path="/input_pejabat" component={InputPejabat} />
+        <Route exact path="/histori" component={Histori} />
       </React.Fragment>
     )
   }

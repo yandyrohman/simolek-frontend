@@ -26,14 +26,21 @@ export default class Detail extends React.Component {
     })
   }
   render() {
-    let { data, indexProgram, indexKegiatan ,nomorKegiatan ,namaKegiatan } = this.props;
+    let { 
+      data, 
+      indexProgram, 
+      indexKegiatan, 
+      namaKegiatan
+    } = this.props;
     let details;
+    let idProgram = data[0].id_program;
+    let numberKegiatan = data[0].number_kegiatan;
     if (data.length !== 0) {
       details = data.map((x, i) => {
         return (
           <React.Fragment key={i}>
             <div className="tambah-detail">
-              <b>{i+1}.</b>&nbsp;
+              <b>{`${x.id_program}.${x.number_kegiatan}.${x.number}`}&nbsp;</b>&nbsp;
               <span>{x.nama_detail}</span>
               <div 
                 className="tambah-detail-delete"
@@ -48,7 +55,7 @@ export default class Detail extends React.Component {
     } else {
       details = (
         <div className="tambah-detail-none">
-          Kegiatan {nomorKegiatan} tidak ada sub kegiatan..
+          Kegiatan {`${idProgram}.${numberKegiatan}`} tidak ada sub kegiatan..
         </div>
       );
     }
@@ -67,7 +74,9 @@ export default class Detail extends React.Component {
           <Add />
           <div className="tambah-detail-add-caption">
             <span className="tambah-detail-add-arrow"></span>
-            <span>Tambah Sub Kegiatan <b>(Kegiatan {nomorKegiatan})</b></span>
+            <span>
+              Tambah Sub Kegiatan <b>({`${idProgram}.${numberKegiatan}`})</b>
+            </span>
           </div>
         </div>
         <Delete 

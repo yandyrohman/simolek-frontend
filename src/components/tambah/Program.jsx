@@ -46,7 +46,7 @@ export default class Program extends React.Component {
               className="tambah-program"
               onClick={() => this.showChild(i)}
             >
-              <b>{i+1}.</b>&nbsp;
+              <b>{x.id}.</b>&nbsp;
               <span>{x.nama_program}</span>
               <div 
                 className="tambah-program-delete"

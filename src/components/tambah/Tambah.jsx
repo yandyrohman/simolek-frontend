@@ -27,14 +27,14 @@ export default class Tambah extends React.Component {
     let color;
     let color_s;
     if (type === 'program') {
-      color = 'yellow';
-      color_s = 'yellow-s';
+      color = 'dark';
+      color_s = 'dark-s';
     } else if (type === 'kegiatan') {
-      color = 'black';
-      color_s = 'black-s';
+      color = 'medium';
+      color_s = 'medium-s';
     } else if (type === 'detail') {
-      color = 'white';
-      color_s = 'white-s';
+      color = 'light';
+      color_s = 'light-s';
     } else {
       color = '';
       color_s = '';

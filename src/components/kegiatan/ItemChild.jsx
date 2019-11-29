@@ -19,19 +19,26 @@ export default class ItemChild extends React.Component {
   render() {
     let data = this.props.data;
     let parentIndex = this.props.index;
+    let idProgram = this.props.idProgram;
     let itemChilds = data.map((child, index) => {
       let { nama_kegiatan, grandchild } = child;
       return (
         <div className="kegiatan-child-item" onClick={this.showItemGrandChild} key={index}>
-          <div className="kegiatan-child-item-etc">{index + 1}</div>
           <div className="kegiatan-child-item-etc" id={`child-${parentIndex}-${index}`}>
-            {nama_kegiatan}
+            <span className="kegiatan-child-num" id={`child-${parentIndex}-${index}`}>
+              &nbsp;{`${idProgram}.${child.number}`}&nbsp;
+            </span>&nbsp;
+            <span id={`child-${parentIndex}-${index}`}>{nama_kegiatan}</span>
           </div>
-          <div className="kegiatan-child-item-etc"><KeyboardArrowDown /></div>
+          <div className="kegiatan-child-item-etc">
+            <KeyboardArrowDown id={`child-${parentIndex}-${index}`} />
+          </div>
           <div className="kegiatan-grandchild" id={`child-${parentIndex}-${index}-list`}>
             <ItemGrandChild 
               data={grandchild}
               openDetailPopup={this.props.openDetailPopup}
+              idProgram={idProgram}
+              numberKegiatan={child.number}
             />
           </div>
         </div>

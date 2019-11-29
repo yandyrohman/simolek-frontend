@@ -116,7 +116,13 @@ export default class DetailNext extends React.Component {
   updateData = (type) => {
     let url = Url.api + 'input_kegiatan/' + type;
     let data = this.state[type];
-    data = {id: this.state.id_sub_kegiatan, ...data};
+    let data_login = JSON.parse(window.localStorage.getItem('user'))
+    let user = data_login.login;
+    data = {
+      ...data,
+      id: this.state.id_sub_kegiatan,
+      id_user: user.id
+    };
     this.props.turnLoading('on')
     fetch(url, {
       method: 'POST',

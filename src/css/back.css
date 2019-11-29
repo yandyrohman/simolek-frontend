@@ -1,3 +1,5 @@
+@import "./config.css";
+
 .back {
   width: calc(100% - 40px);
   height: 40px;
@@ -10,7 +12,7 @@
 }
 
   .back a {
-    color: #fff;
+    color: var(--color-dark);
     text-decoration: none;
     align-self: center;
     -webkit-tap-highlight-color: rgba(0,0,0,0) !important;
@@ -20,7 +22,7 @@
   .back-title {
     font-size: 20px;
     font-weight: bold;
-    color: #fff;
+    color: var(--color-dark);
     justify-self: end;
     align-self: center;
   }
@@ -29,5 +31,5 @@
     font-size: 14px;
     justify-self: end;
     text-align: right;
-    color: #fff;
+    color: var(--color-dark);
   }

@@ -3,7 +3,7 @@ import { KeyboardArrowRight } from '@material-ui/icons'
 
 export default class ItemGrandChild extends React.Component {
   render() {
-    let data = this.props.data;
+    let { data, idProgram, numberKegiatan } = this.props;
     let grandChilds = data.map((grandChild, index) => {
       // variable dibawah ini bisa memanggil data lengkap
       let { 
@@ -19,8 +19,12 @@ export default class ItemGrandChild extends React.Component {
           key={index}
           onClick={() => this.props.openDetailPopup(grandChild)}
         >
-          <div className="kegiatan-grandchild-item-etc">{index + 1}</div>
-          <div className="kegiatan-grandchild-item-etc">{nama_detail}</div>
+          <div className="kegiatan-grandchild-item-etc">
+            <span className="kegiatan-grandchild-item-num">
+              &nbsp;{`${idProgram}.${numberKegiatan}.${grandChild.number}`}&nbsp;
+            </span>&nbsp;
+            <span>{nama_detail}</span>
+          </div>
           <div className="kegiatan-grandchild-item-etc"><KeyboardArrowRight /></div>
           <div className="kegiatan-grandchild-process">
             <small>Persentase Fisik :</small>

@@ -3,7 +3,8 @@ import '../../css/login.css'
 import { PersonOutline, LockOutlined } from '@material-ui/icons'
 import { Link } from 'react-router-dom'
 import Url from '../../API'
-import Bg from '../other/Bg'
+// import Bg from '../other/Bg'
+import Loading from '../other/Loading'
 
 export default class Root extends React.Component {
   constructor(props) {
@@ -11,7 +12,8 @@ export default class Root extends React.Component {
     this.state = {
       error: false,
       username: '',
-      password: ''
+      password: '',
+      loading: false
     }
   }
   handleUsername = (e) => {
@@ -24,6 +26,11 @@ export default class Root extends React.Component {
       password: e.target.value
     })
   }
+  turnLoading = (value) => {
+    this.setState({
+      loading: value === 'on' ? true : false
+    })
+  }
   login = () => {
     let { username, password } = this.state;
     let url = Url.api + 'login';
@@ -31,6 +38,7 @@ export default class Root extends React.Component {
       username: username,
       password: password
     };
+    this.turnLoading('on')
     fetch(url, {
       method: 'POST',
       headers: {
@@ -41,9 +49,11 @@ export default class Root extends React.Component {
     }).then(res => res.json()).then(res => {
       if (res.login !== false) {
         window.localStorage.setItem('user', JSON.stringify(res));
+        this.turnLoading('off')
         window.location = '/menu';
       } else {
         this.loginError()
+        this.turnLoading('off')
       }
     });
   }
@@ -55,9 +65,13 @@ export default class Root extends React.Component {
   render() {
     return (
       <div className="login-root">
-        <Bg />
+        <Loading loading={this.state.loading}/>
+        {/* <Bg /> */}
         <div className="login-box">
           <div className="login-title">SiMolek</div>
+          <div className="login-subtitle">
+            Sistem Informasi Monitoring dan <br />Evaluasi Kinerja
+          </div>
           <div className="login-input">
             <div className="login-input-icon">
               <PersonOutline />

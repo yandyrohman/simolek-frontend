@@ -3,23 +3,45 @@ import '../../css/menu.css'
 import { Link } from 'react-router-dom'
 import Feedback from '../other/Feedback'
 import { 
-  Assignment,
-  SettingsApplications,
-  Input,
-  Person,
-  EmojiEmotions,
-  PowerSettingsNew,
-  Assessment,
-  SupervisorAccount
+  AssignmentTwoTone,
+  SettingsApplicationsTwoTone,
+  AddCircleTwoTone,
+  PersonTwoTone,
+  // EmojiEmotionsTwoTone,
+  ForwardTwoTone,
+  AssessmentTwoTone,
+  SupervisorAccountTwoTone,
+  ScheduleTwoTone
 } from '@material-ui/icons' 
 import Bg from '../other/Bg'
+import Url from '../../API'
 
 export default class Root extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      show_feedback: false
+      show_feedback: false,
+      image: '',
+      loading: false
     }
+  }
+  componentDidMount() {
+    this.getFoto()
+  }
+  getFoto = () => {
+    let data = JSON.parse(window.localStorage.getItem('user'))
+    let user = data.login;
+    let url = Url.api + 'get_foto/' + user.id;
+    this.turnLoading('on')
+    fetch(url).then(res => res.text()).then(base64 => {
+      this.setState({image: base64})
+      this.turnLoading('off')
+    })
+  }
+  turnLoading = (value) => {
+    this.setState({
+      loading: value === 'on' ? true : false
+    })
   }
   displayFeedback = () => {
     this.setState({
@@ -37,10 +59,26 @@ export default class Root extends React.Component {
         <Bg />
         <div className="menu-title">
           <h3>SiMolek</h3>
-          <small>Pantau kegiatan dinas dengan mudah!</small>
+          <small>
+            Sistem Informasi Monitoring dan <br />Evaluasi Kinerja
+          </small>
         </div>
         <div className="menu-profile">
-          <Person className="menu-profile-photo"/>
+          {
+            this.state.loading ? (
+              <div className="menu-profile-photo-loading">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            ) : (
+              <img 
+                className="menu-profile-photo" 
+                src={this.state.image}
+                alt="profile"
+              />
+            )
+          }
           <div className="menu-profile-name">{name}</div>
           <div className="menu-profile-jabatan">{position}</div>
         </div>
@@ -82,27 +120,31 @@ class MenuKPA extends React.Component {
     return (
       <div className="menu-list">
         <Link to="/progres">
-          <Assessment />
+          <AssessmentTwoTone />
           <span>Progres<br/>Kegiatan</span>
         </Link>
         <Link to="/kegiatan">
-          <Assignment />
+          <AssignmentTwoTone />
           <span>Semua<br/>Kegiatan</span>
         </Link>
         <Link to="/pejabat">
-          <SupervisorAccount />
+          <SupervisorAccountTwoTone />
           <span>Daftar<br/>Pejabat</span>
         </Link>
+        <Link to="/histori">
+          <ScheduleTwoTone />
+          <span>Histori</span>
+        </Link>
         <Link to="/profile">
-          <Person />
+          <PersonTwoTone />
           <span>Profile</span>
         </Link>
-        <div className="menu-link" onClick={this.props.displayFeedback}>
-          <EmojiEmotions />
+        {/* <div className="menu-link" onClick={this.props.displayFeedback}>
+          <EmojiEmotionsTwoTone />
           <span>Feedback</span>
-        </div>
+        </div> */}
         <Link to="/" onClick={this.props.logout}>
-          <PowerSettingsNew />
+          <ForwardTwoTone />
           <span>Logout</span>
         </Link>
       </div>
@@ -115,27 +157,31 @@ class MenuPPTK extends React.Component {
     return (
       <div className="menu-list">
         <Link to="/progres">
-          <Assessment />
+          <AssessmentTwoTone />
           <span>Progres<br/>Kegiatan</span>
         </Link>
         <Link to="/kegiatan">
-          <Assignment />
+          <AssignmentTwoTone />
           <span>Semua<br/>Kegiatan</span>
         </Link>
         <Link to="/pejabat">
-          <SupervisorAccount />
+          <SupervisorAccountTwoTone />
           <span>Daftar<br/>PPK</span>
         </Link>
+        <Link to="/histori">
+          <ScheduleTwoTone />
+          <span>Histori</span>
+        </Link>
         <Link to="/profile">
-          <Person />
+          <PersonTwoTone />
           <span>Profile</span>
         </Link>
-        <div className="menu-link" onClick={this.props.displayFeedback}>
-          <EmojiEmotions />
+        {/* <div className="menu-link" onClick={this.props.displayFeedback}>
+          <EmojiEmotionsTwoTone />
           <span>Feedback</span>
-        </div>
+        </div> */}
         <Link to="/" onClick={this.props.logout}>
-          <PowerSettingsNew />
+          <ForwardTwoTone />
           <span>Logout</span>
         </Link>
       </div>
@@ -148,27 +194,31 @@ class MenuPPK extends React.Component {
     return (
       <div className="menu-list">
         <Link to="/input">
-          <Input />
+          <AddCircleTwoTone />
           <span>Input<br/>Kegiatan</span>
         </Link>
         <Link to="/kegiatan">
-          <Assignment />
+          <AssignmentTwoTone />
           <span>Semua<br/>Kegiatan</span>
         </Link>
         <Link to="/progres">
-          <Assessment />
+          <AssessmentTwoTone />
           <span>Progres<br/>Kegiatan</span>
         </Link>
+        <Link to="/histori">
+          <ScheduleTwoTone />
+          <span>Histori</span>
+        </Link>
         <Link to="/profile">
-          <Person />
+          <PersonTwoTone />
           <span>Profile</span>
         </Link>
-        <div className="menu-link" onClick={this.props.displayFeedback}>
-          <EmojiEmotions />
+        {/* <div className="menu-link" onClick={this.props.displayFeedback}>
+          <EmojiEmotionsTwoTone />
           <span>Feedback</span>
-        </div>
+        </div> */}
         <Link to="/" onClick={this.props.logout}>
-          <PowerSettingsNew />
+          <ForwardTwoTone />
           <span>Logout</span>
         </Link>
       </div>
@@ -181,27 +231,27 @@ class MenuAdmin extends React.Component {
     return (
       <div className="menu-list">
         <Link to="/tambah">
-          <SettingsApplications />
+          <SettingsApplicationsTwoTone />
           <span>Kelola<br/>Kegiatan</span>
         </Link>
         <Link to="/users">
-          <SupervisorAccount />
+          <SupervisorAccountTwoTone />
           <span>Kelola<br/>User</span>
         </Link>
         <Link to="/kegiatan">
-          <Assignment />
+          <AssignmentTwoTone />
           <span>Semua<br/>Kegiatan</span>
         </Link>
+        <Link to="/histori">
+          <ScheduleTwoTone />
+          <span>Histori</span>
+        </Link>
         <Link to="/profile">
-          <Person />
+          <PersonTwoTone />
           <span>Profile</span>
         </Link>
-        <div className="menu-link" onClick={this.props.displayFeedback}>
-          <EmojiEmotions />
-          <span>Feedback</span>
-        </div>
         <Link to="/" onClick={this.props.logout}>
-          <PowerSettingsNew />
+          <ForwardTwoTone />
           <span>Logout</span>
         </Link>
       </div>
@@ -228,7 +278,7 @@ class MenuAdmin extends React.Component {
 //  * Logout
 
 // - PPK :
-//  * Input Kegiatan (kegiatan dia)
+//  * AddCircleTwoTone Kegiatan (kegiatan dia)
 //  * Semua Kegiatan (kegiatan dia)
 //  * Grafik Kegiatan (kegiatan dia)
 //  * Profile

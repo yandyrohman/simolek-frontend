@@ -22,7 +22,9 @@ export default class Program extends React.Component {
               className="input-program"
               onClick={() => this.showChild(i)}
             >
-              <b>{i+1}.</b>&nbsp;
+              <b className="input-program-num">
+                &nbsp;{x.id}&nbsp;
+              </b>&nbsp;
               <span>{x.nama_program}</span>
             </div>
             <div 
@@ -32,6 +34,7 @@ export default class Program extends React.Component {
               <Kegiatans 
                 data={x.child}
                 index={i+1}
+                idProgram={x.id}
                 namaProgram={x.nama_program}
                 openInput={this.props.openInput}
               />

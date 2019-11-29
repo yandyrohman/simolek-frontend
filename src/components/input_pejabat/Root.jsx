@@ -124,7 +124,7 @@ export default class Root extends React.Component {
                 key={indexProgram}
               >
                 <div className="input_pejabat-program-title">
-                  {`${indexProgram + 1} ${program.nama_program}`}
+                  {`(${program.id}) ${program.nama_program}`}
                 </div>
                 {
                   program.child.map((kegiatan, indexKegiatan) => (
@@ -133,7 +133,7 @@ export default class Root extends React.Component {
                       key={indexKegiatan}
                     >
                       <div className="input_pejabat-kegiatan-title">
-                        {`${indexProgram + 1}.${indexKegiatan + 1} ${kegiatan.nama_kegiatan}`}
+                        {`(${kegiatan.id_program}.${kegiatan.number}) ${kegiatan.nama_kegiatan}`}
                       </div>
                       <div className="input_pejabat-detail">
                         {
@@ -141,9 +141,6 @@ export default class Root extends React.Component {
                             <SubKegiatan 
                               key={detail.id}
                               data={detail}
-                              indexDetail={indexDetail}
-                              indexProgram={indexProgram}
-                              indexKegiatan={indexKegiatan}
                               putIdDetail={this.putIdDetail}
                             />
                           ))

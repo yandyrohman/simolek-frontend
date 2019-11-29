@@ -5,7 +5,7 @@ import Programs from './Program'
 import Loading from '../other/Loading'
 import Tambah from './Tambah'
 import Back from '../other/Back'
-import { CloudUpload, Person } from '@material-ui/icons'
+import { CloudUploadTwoTone, PersonTwoTone } from '@material-ui/icons'
 import { Link } from 'react-router-dom'
 import Bg from '../other/Bg'
 import Dialog from './Dialog'
@@ -115,11 +115,11 @@ export default class Root extends React.Component {
           />
           <div className="tambah-button" onClick={this.openDialog}>
             <span>Import Kegiatan&nbsp;</span>
-            <CloudUpload />  
+            <CloudUploadTwoTone />  
           </div>
           <Link to="/input_pejabat" className="tambah-button">
             <span>Input Pejabat&nbsp;</span>
-            <Person />  
+            <PersonTwoTone />  
           </Link>
           <div className="tambah-title">Data Kegiatan</div>
           <Programs 
