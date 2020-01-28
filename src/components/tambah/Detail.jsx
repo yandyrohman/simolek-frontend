@@ -33,8 +33,8 @@ export default class Detail extends React.Component {
       namaKegiatan
     } = this.props;
     let details;
-    let idProgram = data[0].id_program;
-    let numberKegiatan = data[0].number_kegiatan;
+    let idProgram = data[0] ? data[0].id_program : 0;
+    let numberKegiatan = data[0] ? data[0].number_kegiatan : 0;
     if (data.length !== 0) {
       details = data.map((x, i) => {
         return (

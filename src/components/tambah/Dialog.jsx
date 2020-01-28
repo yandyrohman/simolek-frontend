@@ -23,6 +23,7 @@ export default class Dialog extends Component {
         filename: file.name,
         excel_data: datas
       })
+      console.log(datas)
     })
   }
   sendData = () => {
@@ -37,7 +38,9 @@ export default class Dialog extends Component {
       body: JSON.stringify({
         data: this.state.excel_data
       })
-    }).then(() => {
+    })
+    // .then(res => res.json()).then(data => console.log(data))
+    .then(() => {
       this.props.turnLoading('on')
       this.props.hideDialog()
       this.props.getAllDatas()
@@ -65,9 +68,9 @@ export default class Dialog extends Component {
               row.push(0);
           } else {
             if (colNum === 1) {
-              row.push(nextCell.w); // data formatted
-            } else {
               row.push(nextCell.v); // data plan
+            } else {
+              row.push(nextCell.w); // data formatted
             }
           }
         }

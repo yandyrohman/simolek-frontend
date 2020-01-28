@@ -8,7 +8,7 @@ export default class InputKontrak extends React.Component {
           <label>Persentase Fisik</label>
           <input 
             className="input-value-input"
-            type="number"
+            type="text"
             placeholder="Persentase Fisik (%)"
             spellCheck="false"
             value={this.props.data.persentase_fisik}

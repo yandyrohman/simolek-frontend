@@ -7,6 +7,8 @@ import Url from '../../API'
 import Back from '../other/Back'
 import Detail from './Detail'
 import Bg from '../other/Bg'
+import XLSX from 'xlsx'
+import DownloadTable from '../other/DownloadTable'
 
 export default class Root extends React.Component {
   constructor(props) {
@@ -109,10 +111,16 @@ export default class Root extends React.Component {
       detail_popup_show: false,
     })
   }
+  downloadTable = () => {
+    let tbl = document.getElementById('download-table');
+    var wb = XLSX.utils.table_to_book(tbl);
+    return XLSX.writeFile(wb, 'tes.xlsx');
+  }
   render() {
     return (
       <div className="kegiatan-root">
         <Bg />
+        <DownloadTable data={this.state.items}/>
         <Loading loading={this.state.loading}/>
         <div className="kegiatan-list">
           <Back 
@@ -134,6 +142,10 @@ export default class Root extends React.Component {
             data={this.state.items}
             openDetailPopup={this.openDetailPopup}
           />
+          <button  
+            className="kegiatan-download"
+            onClick={this.downloadTable}
+          >DOWNLOAD</button>
         </div>
         <Detail 
           show={this.state.detail_popup_show}

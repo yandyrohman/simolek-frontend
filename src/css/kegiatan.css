@@ -289,4 +289,19 @@
     align-items: center;
     color: #fff;
   }
+
+.kegiatan-download {
+  width: 200px;
+  height: auto;
+  padding: 10px;
+  font-weight: bold;
+  background: #fff;
+  color: #333;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  margin-left: calc(50% - 100px);
+  margin-bottom: 20px;
+  box-shadow: 0 8px 6px -6px rgba(0,0,0,0.7);
+}
   
